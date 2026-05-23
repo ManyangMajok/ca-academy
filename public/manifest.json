@@ -1,0 +1,19 @@
+{
+  "name": "CA Academy — Food Truck Coaching",
+  "short_name": "CA Academy",
+  "description": "Free webinar and personalized coaching for food truck operators",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "theme_color": "#FF6A1A",
+  "background_color": "#0E0D0B",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "64x64",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
