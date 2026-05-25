@@ -250,6 +250,51 @@ footer{padding:64px 0 40px;border-top:1px solid var(--line);z-index:2;position:r
 .reveal{opacity:0;transform:translateY(34px);transition:opacity .8s ease,transform .8s ease}
 .reveal.in{opacity:1;transform:none}
 
+/* ===== THEME TOGGLE BUTTON ===== */
+.theme-toggle{
+  background:none;border:1px solid var(--line);color:var(--cream);
+  width:36px;height:36px;border-radius:50%;cursor:pointer;
+  display:grid;place-items:center;transition:border-color .2s,color .2s,transform .2s;
+  flex-shrink:0;
+}
+.theme-toggle:hover{border-color:var(--gold);color:var(--gold);transform:rotate(20deg)}
+.theme-toggle svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+.icon-moon{display:block}
+.icon-sun{display:none}
+[data-theme="light"] .icon-moon{display:none}
+[data-theme="light"] .icon-sun{display:block}
+
+/* ===== LIGHT MODE ===== */
+[data-theme="light"]{
+  --ink:#FAF7F2;
+  --ink-2:#EDE8DF;
+  --panel:#FFFFFF;
+  --cream:#1A1510;
+  --cream-dim:#4A4035;
+  --muted:#8C7E6A;
+  --gold:#9E7C23;
+  --gold-deep:#7A5E1A;
+  --gold-light:#C9A84C;
+  --line:rgba(140,110,50,0.22);
+}
+
+[data-theme="light"] body::before{opacity:.35}
+[data-theme="light"] ::selection{background:var(--gold);color:#FAF7F2}
+[data-theme="light"] nav.scrolled{background:rgba(250,247,242,.92)}
+[data-theme="light"] .ph{background:linear-gradient(135deg,#e0d8cc,#cec6b8)}
+[data-theme="light"] .hero::after{background:radial-gradient(circle,rgba(158,124,35,.10),transparent 62%)}
+[data-theme="light"] #join{background:linear-gradient(160deg,#ede8df,#faf7f2 70%)}
+[data-theme="light"] .modal{background:rgba(250,247,242,.92)}
+[data-theme="light"] .btn-ghost{border-color:rgba(140,110,50,.35);color:var(--cream)}
+[data-theme="light"] .btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
+[data-theme="light"] .ok-msg{background:rgba(158,124,35,.08)}
+[data-theme="light"] .secure-pill{background:rgba(158,124,35,.08)}
+[data-theme="light"] .check{background:var(--ink-2)}
+[data-theme="light"] .field input,
+[data-theme="light"] .field select,
+[data-theme="light"] .field textarea{background:var(--ink-2);color:var(--cream)}
+[data-theme="light"] .join-form input{background:var(--ink-2);color:var(--cream)}
+
 @media(max-width:920px){
   .navlinks{display:none}
   .burger{display:block}
