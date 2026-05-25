@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
       ev.preventDefault();
       let valid = true;
       f.querySelectorAll('[required]').forEach(inp => {
-        if (!inp.value.trim()) { inp.style.borderColor = 'var(--flame-deep)'; valid = false; }
+        if (!inp.value.trim()) { inp.style.borderColor = 'var(--error)'; valid = false; }
         else { inp.style.borderColor = ''; }
       });
       if (!valid) return;
