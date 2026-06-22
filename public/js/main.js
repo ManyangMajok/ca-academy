@@ -66,13 +66,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const fname = f.querySelector('[name="fname"]').value;
         const lname = f.querySelector('[name="lname"]').value;
         const email = f.querySelector('[name="email"]').value;
+        const stage = f.querySelector('[name="stage"]').value;
         
         const cFname = document.getElementById('chkFname');
         const cLname = document.getElementById('chkLname');
         const cEmail = document.getElementById('chkEmail');
+        const cStage = document.getElementById('chkStage');
         if (cFname) cFname.value = fname;
         if (cLname) cLname.value = lname;
         if (cEmail) cEmail.value = email;
+        if (cStage) cStage.value = stage;
         
         if (window.openCheckout && window.showCheckoutStep) {
           window.openCheckout();

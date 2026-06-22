@@ -228,7 +228,7 @@
         <p class="rv-text">"I was running two trucks at $9k combined. After implementing the location stacking method, we hit $31k in month three. The pricing framework alone was worth 10× the cost of everything."</p>
         <div class="rv-author">
           <div class="rv-avatar">MD</div>
-          <div><div class="rv-name">Marcus D.</div><div class="rv-role">Two-truck operator · Houston, TX</div></div>
+          <div><div class="rv-name">Marcus D.</div><div class="rv-role">Two-truck operator · Sydney, NSW</div></div>
         </div>
       </div>
       <div class="rv-card reveal">
@@ -236,7 +236,7 @@
         <p class="rv-text">"Stuck at $7,500/month for two years — I thought my food just wasn't good enough. Adan showed me my food was great. My pricing and location choices were bleeding money. We're at $22k now."</p>
         <div class="rv-author">
           <div class="rv-avatar">AT</div>
-          <div><div class="rv-name">Aliyah T.</div><div class="rv-role">Solo operator · Atlanta, GA</div></div>
+          <div><div class="rv-name">Aliyah T.</div><div class="rv-role">Solo operator · Melbourne, VIC</div></div>
         </div>
       </div>
       <div class="rv-card reveal">
@@ -244,7 +244,7 @@
         <p class="rv-text">"The catering playbook section was my breakthrough. I added $8k/month in catering revenue from my existing customer base in 60 days. Hadn't even considered it before the webinar."</p>
         <div class="rv-author">
           <div class="rv-avatar">JT</div>
-          <div><div class="rv-name">Jasmine T.</div><div class="rv-role">Catering + truck · Miami, FL</div></div>
+          <div><div class="rv-name">Jasmine T.</div><div class="rv-role">Catering + truck · Brisbane, QLD</div></div>
         </div>
       </div>
       <div class="rv-card reveal">
@@ -252,7 +252,7 @@
         <p class="rv-text">"I was ready to close after year one. The webinar showed me exactly where my money was going. 14 months later: second truck, $45k/month. The systems section alone was the whole game."</p>
         <div class="rv-author">
           <div class="rv-avatar">BK</div>
-          <div><div class="rv-name">Brandon K.</div><div class="rv-role">Multi-truck · Chicago, IL</div></div>
+          <div><div class="rv-name">Brandon K.</div><div class="rv-role">Multi-truck · Perth, WA</div></div>
         </div>
       </div>
       <div class="rv-card reveal">
@@ -260,7 +260,7 @@
         <p class="rv-text">"Skeptical about another 'business guru' webinar. But Adan actually runs trucks — you can tell immediately. The hiring framework saved me from a bad decision that would've cost $30k easy."</p>
         <div class="rv-author">
           <div class="rv-avatar">PN</div>
-          <div><div class="rv-name">Priya N.</div><div class="rv-role">Established operator · Los Angeles, CA</div></div>
+          <div><div class="rv-name">Priya N.</div><div class="rv-role">Established operator · Auckland, NZ</div></div>
         </div>
       </div>
       <div class="rv-card rv-card-featured reveal">
@@ -268,7 +268,7 @@
         <p class="rv-text">"His systems let me step off the truck on Tuesdays and Thursdays. That's time with my family I couldn't buy before. Revenue went up <em>and</em> I'm working less. That's the actual win."</p>
         <div class="rv-author">
           <div class="rv-avatar">DR</div>
-          <div><div class="rv-name">Derek R.</div><div class="rv-role">Owner-operator · Dallas, TX</div></div>
+          <div><div class="rv-name">Derek R.</div><div class="rv-role">Owner-operator · Adelaide, SA</div></div>
         </div>
       </div>
     </div>
@@ -365,13 +365,23 @@
       </div>
       <div class="row2">
         <div class="field"><label>City / region</label><input type="text" name="gcity" placeholder="Where you operate"></div>
-        <div class="field"><label>Monthly revenue (approx.)</label>
-          <select name="grev">
-            <option value="">Prefer not to say</option>
-            <option>Pre-revenue</option><option>Under $10k</option>
-            <option>$10k–$30k</option><option>$30k–$75k</option><option>$75k+</option>
+        <div class="field">
+          <label>Business stage</label>
+          <select name="gstage" required>
+            <option value="">Select your stage…</option>
+            <option>Planning / pre-launch</option>
+            <option>Open under 1 year</option>
+            <option>Open 1–3 years</option>
+            <option>Established, scaling</option>
           </select>
         </div>
+      </div>
+      <div class="field"><label>Monthly revenue (approx.)</label>
+        <select name="grev">
+          <option value="">Prefer not to say</option>
+          <option>Pre-revenue</option><option>Under $10k</option>
+          <option>$10k–$30k</option><option>$30k–$75k</option><option>$75k+</option>
+        </select>
       </div>
       <div class="field"><label>What's your single biggest bottleneck right now?</label>
         <textarea name="gnote" placeholder="e.g. great food but slow weekdays, can't find good locations, margins feel thin…"></textarea>
@@ -390,7 +400,7 @@
     <div class="curriculum-head reveal">
       <span class="eyebrow">What you'll get · Full Curriculum</span>
       <h2>What you'll get.<br><span class="serif">Every module, every lever.</span></h2>
-      <p class="curriculum-tagline">The 7-Figure Food Truck Blueprint: How to Launch, Grow &amp; Scale a Profitable Food Truck Business in Australia 🚚📈🔥</p>
+      <p class="curriculum-tagline">The 7-Figure Food Truck Blueprint: How to Launch, Grow &amp; Scale a Profitable Food Truck Business in Australia</p>
       <p style="color:var(--cream-dim);font-size:17px;max-width:680px;margin:0 auto">Seven outcome-driven modules built for both new owners starting from scratch and existing operators ready to break through to real money.</p>
     </div>
 
@@ -770,8 +780,20 @@
           <div class="field"><label>First Name</label><input type="text" id="chkFname" required placeholder="Jordan"></div>
           <div class="field"><label>Last Name</label><input type="text" id="chkLname" required placeholder="Lee"></div>
         </div>
-        <div class="field"><label>Email</label><input type="email" id="chkEmail" required placeholder="you@email.com"></div>
-        <div class="field"><label>Phone Number</label><input type="tel" id="chkPhone" required placeholder="+1 234 567 8900"></div>
+        <div class="row2">
+          <div class="field"><label>Email</label><input type="email" id="chkEmail" required placeholder="you@email.com"></div>
+          <div class="field"><label>Phone Number</label><input type="tel" id="chkPhone" required placeholder="0400 000 000"></div>
+        </div>
+        <div class="field">
+          <label>Business stage</label>
+          <select id="chkStage" required>
+            <option value="">Select your stage…</option>
+            <option>Planning / pre-launch</option>
+            <option>Open under 1 year</option>
+            <option>Open 1–3 years</option>
+            <option>Established, scaling</option>
+          </select>
+        </div>
         <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:20px">Continue to Course Selection <span class="btn-arrow">→</span></button>
       </form>
     </div>

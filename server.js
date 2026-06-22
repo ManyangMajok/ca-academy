@@ -53,16 +53,16 @@ app.post('/api/webinar', async (req, res) => {
 // Personalized guide request
 app.post('/api/guide', async (req, res) => {
   try {
-    const { gname, gemail, gcity, grev, gnote } = req.body;
+    const { gname, gemail, gcity, grev, gnote, gstage } = req.body;
     
     if (!gname || !gemail) {
       return res.status(400).json({ error: 'Missing required fields' });
     }
     
-    const result = await insertGuideRequest({ gname, gemail, gcity, grev, gnote });
+    const result = await insertGuideRequest({ gname, gemail, gcity, grev, gnote, gstage });
     
     if (result.success) {
-      await sendGuideConfirm({ gname, gemail, gcity, grev, gnote });
+      await sendGuideConfirm({ gname, gemail, gcity, grev, gnote, gstage });
       return res.json({ success: true, message: 'Guide request received' });
     } else {
       return res.status(500).json({ error: result.error });
@@ -76,18 +76,18 @@ app.post('/api/guide', async (req, res) => {
 // Feedback link request
 app.post('/api/feedback', async (req, res) => {
   try {
-    const { fname, femail, fwhat, paid, budget } = req.body;
+    const { fname, femail, fwhat, paid, budget, fstage } = req.body;
     
     if (!fname || !femail || !fwhat) {
       return res.status(400).json({ error: 'Missing required fields' });
     }
     
-    const result = await insertFeedbackLink({ fname, femail, fwhat, paid: paid || false, budget });
+    const result = await insertFeedbackLink({ fname, femail, fwhat, paid: paid || false, budget, fstage });
     
     if (result.success) {
       const token = result.token;
       const feedbackUrl = `${process.env.FRONTEND_URL || 'http://localhost:5173'}/feedback/${token}`;
-      await sendFeedbackLink({ fname, femail, feedbackUrl, paid });
+      await sendFeedbackLink({ fname, femail, feedbackUrl, paid, fstage });
       return res.json({ success: true, message: 'Feedback link sent' });
     } else {
       return res.status(500).json({ error: result.error });
