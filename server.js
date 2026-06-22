@@ -320,6 +320,11 @@ app.get('/api/admin/countdown', checkAdmin, async (req, res) => {
   }
 });
 
+// Feedback page route
+app.get('/feedback/:token', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'feedback.html'));
+});
+
 // Serve frontend for all other routes
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));

@@ -122,9 +122,8 @@
   <div class="navlinks">
     <a href="#about">Meet Adan</a>
     <a href="#webinar">Free Webinar</a>
-    <a href="#strategy">Strategy Session</a>
     <a href="#curriculum">What you'll get</a>
-    <a href="#webinar" class="btn btn-primary nav-cta">Register Free</a>
+    <a href="#" onclick="openCheckout(); return false;" class="btn btn-primary nav-cta">Register Free</a>
   </div>
   <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
     <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
@@ -143,7 +142,7 @@
       </h1>
       <p class="lede">The food truck game rewards the few who treat it like a real company — pricing, systems, locations, brand. TTE Academy hands you the exact playbook used to scale a single trailer into a seven-figure operation.</p>
       <div class="hero-cta">
-        <a href="#webinar" class="btn btn-primary">Save my webinar seat <span class="btn-arrow">→</span></a>
+        <a href="#" onclick="openCheckout(); return false;" class="btn btn-primary">Save my webinar seat <span class="btn-arrow">→</span></a>
         <a href="#about" class="btn btn-ghost">Meet Adan Rispoli</a>
       </div>
       <div class="hero-meta">
@@ -208,7 +207,7 @@
         <span class="trust-chip">140+ owners trained</span>
       </div>
       <div class="sec-cta reveal">
-        <a href="#webinar" class="btn btn-primary">See the playbook live — free webinar <span class="btn-arrow">→</span></a>
+        <a href="#" onclick="openCheckout(); return false;" class="btn btn-primary">See the playbook live — free webinar <span class="btn-arrow">→</span></a>
         <a href="#" onclick="openGuide();return false;" class="btn btn-ghost">Request a personalized guide</a>
       </div>
     </div>
@@ -275,7 +274,7 @@
     </div>
     <div class="reviews-cta reveal">
       <p>Join the operators already on the 7-figure path.</p>
-      <a href="#webinar" class="btn btn-primary">Register for the free webinar <span class="btn-arrow">→</span></a>
+      <a href="#" onclick="openCheckout(); return false;" class="btn btn-primary">Register for the free webinar <span class="btn-arrow">→</span></a>
     </div>
   </div>
 </section>
@@ -383,76 +382,7 @@
   </div>
 </div>
 
-<!-- FEEDBACK + PAID STRATEGY -->
-<section class="sec" id="strategy">
-  <div class="wrap fb-grid">
-    <div class="reveal">
-      <span class="secure-pill">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
-        Secured feedback link
-      </span>
-      <h2 style="font-size:clamp(34px,4.6vw,56px);margin:6px 0 18px">How feedback &amp; strategy works</h2>
-      <p style="color:var(--cream-dim);font-size:18px">After your webinar or guide, we follow up properly — your feedback shapes the program, and if you want hands-on help, there's a paid route too.</p>
-      <ol class="steps">
-        <li><div><h4>You attend or request your guide</h4><p>You get value first — no strings attached.</p></div></li>
-        <li><div><h4>A secured feedback link lands in your inbox</h4><p>A private, unique link sent by email — no public form, tied only to you.</p></div></li>
-        <li><div><h4>You tell us what landed (and what didn't)</h4><p>Two minutes of honest feedback that directly improves TTE Academy.</p></div></li>
-        <li><div><h4>Optional: go deeper with a paid strategy session</h4><p>If you want Adan's eyes on your business directly, opt in for a personalized paid strategy.</p></div></li>
-      </ol>
-    </div>
-
-    <div class="card card-flame-top reveal">
-      <h3>Request your feedback link</h3>
-      <p class="when">Secured · emailed only to you</p>
-      <form id="fbForm" novalidate>
-        <div class="field"><label>Name</label><input type="text" name="fname" required placeholder="Your name"></div>
-        <div class="field"><label>Email for the secured link</label><input type="email" name="femail" required placeholder="you@email.com"></div>
-        <div class="field"><label>What did you attend / request?</label>
-          <select name="fwhat" required>
-            <option value="">Select…</option>
-            <option>The free webinar</option>
-            <option>A personalized guide</option>
-            <option>Both</option>
-          </select>
-        </div>
-        <label class="check">
-          <input type="checkbox" name="paid" id="paidChk">
-          <span><b>Yes — I'd like to pay for a personalized strategy session.</b> Send me details and pricing for a 1:1 strategy built around my business.</span>
-        </label>
-        <div class="field" id="budgetWrap" style="display:none">
-          <label>Rough budget for a strategy session</label>
-          <select name="budget">
-            <option value="">Select a range…</option>
-            <option>Just send pricing first</option>
-            <option>$500 – $1,000</option>
-            <option>$1,000 – $2,500</option>
-            <option>$2,500+</option>
-          </select>
-        </div>
-        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center">Send my secured feedback link <span class="btn-arrow">→</span></button>
-        <div class="ok-msg" id="fbOk">✓ A secured, private feedback link is being generated and emailed to you.</div>
-        <p class="form-note">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
-          The link is unique to you and expires after use — feedback stays private.
-        </p>
-      </form>
-    </div>
-  </div>
-  <div class="wrap" style="margin-top:40px;text-align:center">
-    <button class="guide-link" onclick="openGuide()">Looking for a plan built specifically around your truck? Request a personalized guide →</button>
-  </div>
-  <div class="wrap">
-    <div class="cta-strip reveal">
-      <div class="cta-strip-inner">
-        <div>
-          <p class="cta-strip-eyebrow">Haven't attended the webinar yet?</p>
-          <h3>Start here — it's free and it's 45 minutes.</h3>
-        </div>
-        <a href="#webinar" class="btn btn-primary">Save my free seat <span class="btn-arrow">→</span></a>
-      </div>
-    </div>
-  </div>
-</section>
+<!-- FEEDBACK SECTION REMOVED -->
 
 <!-- WHAT YOU'LL GET — CURRICULUM -->
 <section class="sec curriculum-sec" id="curriculum">
@@ -565,7 +495,7 @@
 
     <div class="curriculum-cta reveal">
       <p>Join the waitlist — founding members get in first, at the lowest price we'll ever offer.</p>
-      <a href="#waitlist" class="btn btn-primary">Join the Blueprint waitlist <span class="btn-arrow">→</span></a>
+      <a href="#" onclick="openCheckout(); return false;" class="btn btn-primary">Join the Blueprint waitlist <span class="btn-arrow">→</span></a>
     </div>
   </div>
 </section>
@@ -594,7 +524,7 @@
         <p class="upsell-subtitle">Locations, Events &amp; Private Functions</p>
         <p class="upsell-desc">Learn how to find profitable trading locations, secure private sites, get into high-traffic events, and keep your calendar booked months in advance.</p>
         <div class="upsell-price">$97 AUD</div>
-        <a href="#waitlist" class="btn btn-primary" style="width:100%;justify-content:center">Get the System <span class="btn-arrow">→</span></a>
+        <a href="#" onclick="openCheckout('system'); return false;" class="btn btn-primary" style="width:100%;justify-content:center">Get the System <span class="btn-arrow">→</span></a>
       </div>
 
       <!-- Upsell 2 -->
@@ -603,7 +533,7 @@
         <p class="upsell-subtitle">Stop Working Hard for Small Margins</p>
         <p class="upsell-desc">Discover exactly how to price your menu, calculate food costs, increase margins, reduce waste, and keep more money in your pocket every week.</p>
         <div class="upsell-price">$97 AUD</div>
-        <a href="#waitlist" class="btn btn-ghost" style="width:100%;justify-content:center">Get the Formula <span class="btn-arrow">→</span></a>
+        <a href="#" onclick="openCheckout('formula'); return false;" class="btn btn-ghost" style="width:100%;justify-content:center">Get the Formula <span class="btn-arrow">→</span></a>
       </div>
 
       <!-- Upsell 3 -->
@@ -612,7 +542,7 @@
         <p class="upsell-subtitle">The $0-$10K Per Month Marketing System</p>
         <p class="upsell-desc">Copy the exact social media, content, and customer retention strategies used to turn a food truck into a local hotspot and generate repeat customers.</p>
         <div class="upsell-price">$97 AUD</div>
-        <a href="#waitlist" class="btn btn-ghost" style="width:100%;justify-content:center">Get the Strategy <span class="btn-arrow">→</span></a>
+        <a href="#" onclick="openCheckout('strategy'); return false;" class="btn btn-ghost" style="width:100%;justify-content:center">Get the Strategy <span class="btn-arrow">→</span></a>
       </div>
 
     </div>
@@ -723,7 +653,7 @@
           <h5>Programs</h5>
           <a href="#webinar">Free Webinar</a>
           <a href="#" onclick="openGuide();return false;">Personalized Guide</a>
-          <a href="#strategy">Strategy Session</a>
+          <a href="#" onclick="openGuide();return false;">Personalized Guide</a>
           <a href="#curriculum">What you'll get</a>
           <a href="#waitlist">Blueprint Waitlist</a>
         </div>
@@ -731,7 +661,6 @@
           <h5>About</h5>
           <a href="#about">Adan Rispoli</a>
           <a href="#join">Mailing List</a>
-          <a href="#strategy">Give Feedback</a>
         </div>
         <div>
           <h5>Contact</h5>
@@ -821,5 +750,102 @@
   setInterval(fetchCountdown, 5 * 60 * 1000);
 })();
 </script>
+<!-- CHECKOUT MODAL -->
+<div class="modal" id="checkoutModal" aria-hidden="true">
+  <div class="modal-box checkout-box">
+    <button class="modal-close" onclick="closeCheckout()" aria-label="Close">&times;</button>
+    <div class="checkout-steps">
+      <div class="step-indicator active" id="chkStepInd1">1. Details</div>
+      <div class="step-indicator" id="chkStepInd2">2. Courses</div>
+      <div class="step-indicator" id="chkStepInd3">3. Payment</div>
+    </div>
+
+    <!-- Step 1: Details -->
+    <div class="checkout-step" id="chkStep1">
+      <span class="eyebrow">Step 1</span>
+      <h3>Your Details</h3>
+      <p>Enter your contact information to get started.</p>
+      <form id="chkForm1" onsubmit="nextCheckoutStep(2); return false;">
+        <div class="row2">
+          <div class="field"><label>First Name</label><input type="text" id="chkFname" required placeholder="Jordan"></div>
+          <div class="field"><label>Last Name</label><input type="text" id="chkLname" required placeholder="Lee"></div>
+        </div>
+        <div class="field"><label>Email</label><input type="email" id="chkEmail" required placeholder="you@email.com"></div>
+        <div class="field"><label>Phone Number</label><input type="tel" id="chkPhone" required placeholder="+1 234 567 8900"></div>
+        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:20px">Continue to Course Selection <span class="btn-arrow">→</span></button>
+      </form>
+    </div>
+
+    <!-- Step 2: Course Selection -->
+    <div class="checkout-step" id="chkStep2" style="display:none">
+      <span class="eyebrow">Step 2</span>
+      <h3>Select Your Courses</h3>
+      <div class="course-list">
+        <label class="course-item selected-fixed">
+          <div class="ci-check">✓</div>
+          <div class="ci-details">
+            <h4>Free Webinar + Playbook</h4>
+            <p>Your free entry and standard guide.</p>
+          </div>
+          <div class="ci-price">$0.00</div>
+        </label>
+        
+        <label class="course-item">
+          <input type="checkbox" id="chkUpsellSystem" value="97" onchange="updateCheckoutTotal()">
+          <div class="ci-details">
+            <h4>The Fully Booked Food Truck System</h4>
+            <p>Locations, Events &amp; Private Functions.</p>
+          </div>
+          <div class="ci-price">+$97.00</div>
+        </label>
+        
+        <label class="course-item">
+          <input type="checkbox" id="chkUpsellFormula" value="97" onchange="updateCheckoutTotal()">
+          <div class="ci-details">
+            <h4>The Food Truck Profit Formula</h4>
+            <p>Stop Working Hard for Small Margins.</p>
+          </div>
+          <div class="ci-price">+$97.00</div>
+        </label>
+        
+        <label class="course-item">
+          <input type="checkbox" id="chkUpsellStrategy" value="97" onchange="updateCheckoutTotal()">
+          <div class="ci-details">
+            <h4>$0-$10K Marketing System</h4>
+            <p>How to Never Worry About Finding Customers.</p>
+          </div>
+          <div class="ci-price">+$97.00</div>
+        </label>
+      </div>
+      <div class="checkout-total">
+        <span>Total Due:</span> <strong id="chkTotalDisplay">$0.00</strong>
+      </div>
+      <div class="row2" style="margin-top:20px;gap:12px">
+        <button type="button" class="btn btn-ghost" onclick="prevCheckoutStep(1)">Back</button>
+        <button type="button" class="btn btn-primary" onclick="nextCheckoutStep(3)" style="flex:1;justify-content:center">Proceed to Payment <span class="btn-arrow">→</span></button>
+      </div>
+    </div>
+
+    <!-- Step 3: Payment -->
+    <div class="checkout-step" id="chkStep3" style="display:none">
+      <span class="eyebrow">Step 3</span>
+      <h3>Payment Details</h3>
+      <p>Secure payment via Stripe.</p>
+      <form id="chkForm3" onsubmit="submitCheckout(); return false;">
+        <div class="field"><label>Card Number</label><input type="text" placeholder="0000 0000 0000 0000" required></div>
+        <div class="row2">
+          <div class="field"><label>Expiry</label><input type="text" placeholder="MM/YY" required></div>
+          <div class="field"><label>CVC</label><input type="text" placeholder="123" required></div>
+        </div>
+        <div class="row2" style="margin-top:20px;gap:12px">
+          <button type="button" class="btn btn-ghost" onclick="prevCheckoutStep(2)">Back</button>
+          <button type="submit" class="btn btn-primary" id="chkPayBtn" style="flex:1;justify-content:center">Pay & Enroll <span class="btn-arrow">→</span></button>
+        </div>
+        <div class="ok-msg" id="chkOk" style="display:none;margin-top:16px">✓ Payment successful! Your webinar link and selected modules will be emailed shortly.</div>
+      </form>
+    </div>
+
+  </div>
+</div>
 </body>
 </html>
