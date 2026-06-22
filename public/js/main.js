@@ -20,6 +20,22 @@ document.addEventListener('DOMContentLoaded', () => {
     nav.classList.toggle('scrolled', window.scrollY > 40);
   });
 
+  // mobile menu
+  const burgerBtn = document.getElementById('burgerBtn');
+  const navlinks = document.querySelector('.navlinks');
+  if (burgerBtn && navlinks) {
+    burgerBtn.addEventListener('click', () => {
+      navlinks.classList.toggle('open');
+      document.body.style.overflow = navlinks.classList.contains('open') ? 'hidden' : '';
+    });
+    navlinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navlinks.classList.remove('open');
+        document.body.style.overflow = '';
+      });
+    });
+  }
+
   // scroll reveal
   const io = new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });

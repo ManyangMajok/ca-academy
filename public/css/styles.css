@@ -811,9 +811,25 @@ footer{padding:64px 0 40px;border-top:1px solid var(--line);z-index:2;position:r
 
 /* ===== RESPONSIVE ADDITIONS ===== */
 @media(max-width:920px){
-  .navlinks{display:none}
+  .navlinks{
+    display:none;
+    position:absolute;
+    top:100%;
+    left:0;
+    right:0;
+    background:var(--ink);
+    flex-direction:column;
+    padding:40px 20px;
+    align-items:center;
+    gap:30px;
+    border-bottom:1px solid var(--line);
+    box-shadow:0 20px 40px rgba(0,0,0,.8);
+  }
+  .navlinks.open{
+    display:flex;
+  }
   .burger{display:block}
-  .hero-grid,.web-grid,.guide-grid,.about-grid,.fb-grid,.waitlist-grid{grid-template-columns:1fr;gap:44px}
+  .hero-grid,.web-grid,.guide-grid,.about-grid,.fb-grid,.waitlist-grid,.modules-grid,.upsells-grid{grid-template-columns:1fr;gap:44px}
   .hero{padding:140px 0 70px}
   .about-grid .about-imgs{order:-1}
   .row2{grid-template-columns:1fr}
