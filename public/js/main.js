@@ -110,6 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // CHECKOUT MODAL LOGIC
   const checkoutModal = document.getElementById('checkoutModal');
+  let maxUnlockedStep = 1;
   
   window.openCheckout = function (upsellId) {
     if (checkoutModal) {
@@ -118,6 +119,8 @@ document.addEventListener('DOMContentLoaded', () => {
       document.body.style.overflow = 'hidden';
       
       // Reset to Step 1
+      maxUnlockedStep = 1;
+      updateIndicatorVisuals();
       showCheckoutStep(1);
       
       // If an upsell is passed, pre-select it and skip to step 2
@@ -129,6 +132,8 @@ document.addEventListener('DOMContentLoaded', () => {
         
         if (chk) chk.checked = true;
         updateCheckoutTotal();
+        maxUnlockedStep = 2;
+        updateIndicatorVisuals();
         showCheckoutStep(2);
       }
     }
@@ -162,7 +167,27 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
+  window.updateIndicatorVisuals = function() {
+    for (let i = 1; i <= 3; i++) {
+      const ind = document.getElementById('chkStepInd' + i);
+      if (ind) {
+        ind.style.cursor = i <= maxUnlockedStep ? 'pointer' : 'not-allowed';
+        ind.style.opacity = i <= maxUnlockedStep ? '1' : '0.5';
+      }
+    }
+  };
+
+  window.goToCheckoutStep = function(stepNum) {
+    if (stepNum <= maxUnlockedStep) {
+      showCheckoutStep(stepNum);
+    }
+  };
+
   window.nextCheckoutStep = function(stepNum) {
+    if (stepNum > maxUnlockedStep) {
+      maxUnlockedStep = stepNum;
+      updateIndicatorVisuals();
+    }
     showCheckoutStep(stepNum);
   };
   
