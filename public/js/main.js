@@ -186,6 +186,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if (btn) btn.disabled = true;
     if (ok) {
       ok.style.display = 'block';
+      // Redirect back to home page after 2 seconds
+      setTimeout(() => {
+        window.location.href = '/';
+      }, 2000);
     }
   };
 
