@@ -765,9 +765,9 @@
   <div class="modal-box checkout-box">
     <button class="modal-close" onclick="closeCheckout()" aria-label="Close">&times;</button>
     <div class="checkout-steps">
-      <div class="step-indicator active" id="chkStepInd1">1. Details</div>
-      <div class="step-indicator" id="chkStepInd2">2. Courses</div>
-      <div class="step-indicator" id="chkStepInd3">3. Payment</div>
+      <div class="step-indicator active" id="chkStepInd1" onclick="showCheckoutStep(1)" style="cursor:pointer">Step one</div>
+      <div class="step-indicator" id="chkStepInd2" onclick="showCheckoutStep(2)" style="cursor:pointer">Step two</div>
+      <div class="step-indicator" id="chkStepInd3" onclick="showCheckoutStep(3)" style="cursor:pointer">Complete registration</div>
     </div>
 
     <!-- Step 1: Details -->
