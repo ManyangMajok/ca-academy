@@ -3,20 +3,102 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CA Academy — From Trailer to 7 Figures</title>
+<title>TTE Academy — From Trailer to 7 Figures</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cinzel+Decorative:wght@700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="manifest" href="/manifest.json">
-  <meta name="description" content="CA Academy — Aiden Rispoli's playbook to scale a food truck from one trailer to seven figures. Free webinar, personalized guides and strategy sessions.">
-  <meta property="og:title" content="CA Academy — From Trailer to 7 Figures">
+  <meta name="description" content="TTE Academy — Adan Rispoli's playbook to scale a food truck from one trailer to seven figures. Free webinar, personalized guides and strategy sessions.">
+  <meta property="og:title" content="TTE Academy — From Trailer to 7 Figures">
   <meta property="og:description" content="Learn the exact systems, pricing and location playbook used to scale a food truck to seven figures. Free webinar + Q&A.">
   <meta property="og:image" content="/images/CA-queue.jpeg">
   <meta name="theme-color" content="#080808">
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+
+<!-- COUNTDOWN BANNER -->
+<div id="cdBanner" style="display:none">
+  <div class="cd-inner">
+    <div class="cd-label-wrap">
+      <span class="cd-pulse"></span>
+      <span class="cd-title" id="cdTitle">Free Webinar</span>
+    </div>
+    <div class="cd-timer">
+      <div class="cd-unit"><span id="cdDays">00</span><small>days</small></div>
+      <div class="cd-sep">:</div>
+      <div class="cd-unit"><span id="cdHours">00</span><small>hrs</small></div>
+      <div class="cd-sep">:</div>
+      <div class="cd-unit"><span id="cdMins">00</span><small>min</small></div>
+      <div class="cd-sep">:</div>
+      <div class="cd-unit"><span id="cdSecs">00</span><small>sec</small></div>
+    </div>
+    <a id="cdLink" href="#" target="_blank" rel="noopener" class="cd-cta">Join Webinar →</a>
+    <button class="cd-dismiss" id="cdDismiss" aria-label="Dismiss countdown">✕</button>
+  </div>
+</div>
+<style>
+#cdBanner{
+  position:fixed;top:0;left:0;right:0;z-index:9999;
+  background:linear-gradient(90deg,#0E0D0B 0%,#1a1408 40%,#0E0D0B 100%);
+  border-bottom:2px solid #C9A84C;
+  box-shadow:0 4px 32px rgba(201,168,76,.25);
+  padding:0 20px;
+}
+.cd-inner{
+  max-width:1200px;margin:0 auto;
+  display:flex;align-items:center;gap:20px;
+  height:64px;flex-wrap:wrap;justify-content:center;
+}
+.cd-label-wrap{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.cd-pulse{
+  display:inline-block;width:10px;height:10px;border-radius:50%;
+  background:#C9A84C;
+  box-shadow:0 0 0 0 rgba(201,168,76,.7);
+  animation:cd-pulse 1.5s infinite;
+}
+@keyframes cd-pulse{
+  0%{box-shadow:0 0 0 0 rgba(201,168,76,.7)}
+  70%{box-shadow:0 0 0 10px rgba(201,168,76,0)}
+  100%{box-shadow:0 0 0 0 rgba(201,168,76,0)}
+}
+.cd-title{font-size:14px;font-weight:700;color:#C9A84C;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
+.cd-timer{display:flex;align-items:center;gap:6px;flex-shrink:0}
+.cd-unit{display:flex;flex-direction:column;align-items:center;min-width:44px}
+.cd-unit span{
+  font-size:26px;font-weight:800;color:#F5EEE0;line-height:1;
+  font-variant-numeric:tabular-nums;letter-spacing:-.01em;
+}
+.cd-unit small{font-size:9px;color:#8C8472;text-transform:uppercase;letter-spacing:.1em;margin-top:1px}
+.cd-sep{font-size:22px;font-weight:700;color:#C9A84C;margin-bottom:8px;line-height:1}
+.cd-cta{
+  background:#C9A84C;color:#0E0D0B;
+  padding:10px 22px;border-radius:3px;
+  font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  text-decoration:none;white-space:nowrap;flex-shrink:0;
+  transition:background .2s,transform .15s;
+}
+.cd-cta:hover{background:#e8c060;transform:translateY(-1px)}
+.cd-dismiss{
+  background:transparent;border:1px solid rgba(245,238,224,.2);
+  color:#8C8472;width:28px;height:28px;border-radius:50%;
+  cursor:pointer;font-size:13px;line-height:1;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  transition:all .2s;
+}
+.cd-dismiss:hover{color:#F5EEE0;border-color:rgba(245,238,224,.5)}
+#cdBanner.cd-live .cd-pulse{background:#22c55e;box-shadow:none;animation:none}
+#cdBanner.cd-live .cd-title{color:#22c55e}
+#cdBanner.cd-live .cd-cta{background:#22c55e}
+#cdBanner.cd-live .cd-cta:hover{background:#16a34a}
+@media(max-width:600px){
+  .cd-inner{height:auto;padding:10px 0;gap:10px}
+  .cd-unit span{font-size:20px}
+  .cd-sep{font-size:18px}
+  .cd-title{font-size:12px}
+}
+</style>
 
 <nav id="nav">
   <a href="#top" class="logo">
@@ -28,12 +110,13 @@
       <text x="5" y="35" font-family="serif" font-size="24" font-weight="bold" fill="#6B3FA0">C</text>
       <text x="20" y="35" font-family="serif" font-size="24" font-weight="bold" fill="#C9A84C">A</text>
     </svg>
-    <span>CA ACADEMY<small>The Blueprint</small></span>
+    <span>TTE ACADEMY<small>The Blueprint</small></span>
   </a>
   <div class="navlinks">
-    <a href="#about">Meet Aiden</a>
+    <a href="#about">Meet Adan</a>
     <a href="#webinar">Free Webinar</a>
     <a href="#strategy">Strategy Session</a>
+    <a href="#curriculum">What you'll get</a>
     <a href="#webinar" class="btn btn-primary nav-cta">Register Free</a>
   </div>
   <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
@@ -47,14 +130,14 @@
 <section class="hero" id="top">
   <div class="wrap hero-grid">
     <div class="reveal in">
-      <span class="eyebrow">CA Academy · The Blueprint</span>
+      <span class="eyebrow">TTE Academy · The Blueprint</span>
       <h1>Take your trailer<br>business
         <span class="serif">all the way to 7 figures a year.</span>
       </h1>
-      <p class="lede">The food truck game rewards the few who treat it like a real company — pricing, systems, locations, brand. CA Academy hands you the exact playbook used to scale a single trailer into a seven-figure operation.</p>
+      <p class="lede">The food truck game rewards the few who treat it like a real company — pricing, systems, locations, brand. TTE Academy hands you the exact playbook used to scale a single trailer into a seven-figure operation.</p>
       <div class="hero-cta">
         <a href="#webinar" class="btn btn-primary">Save my webinar seat <span class="btn-arrow">→</span></a>
-        <a href="#about" class="btn btn-ghost">Meet Aiden Rispoli</a>
+        <a href="#about" class="btn btn-ghost">Meet Adan Rispoli</a>
       </div>
       <div class="hero-meta">
         <div><b>45 min</b>Live webinar + Q&A</div>
@@ -64,7 +147,7 @@
     </div>
     <div class="hero-visual reveal in">
       <div class="ph">
-        <img src="/images/CA-queue.jpeg" alt="CA Academy — customers at the business">
+        <img src="/images/CA-queue.jpeg" alt="TTE Academy — customers at the business">
       </div>
       <div class="hero-badge"><small>Proven on the street</small>From 1 trailer<br>to 7 figures</div>
     </div>
@@ -93,27 +176,99 @@
 <section class="sec" id="about">
   <div class="wrap about-grid">
     <div class="about-imgs reveal">
-      <div class="ph"><img src="/images/Chunkz.jpeg" alt="Aiden Rispoli — CA Academy"></div>
-      <div class="ph"><img src="/images/CA-inside.jpeg" alt="Inside the CA Academy business"></div>
-      <div class="ph"><img src="/images/CA-queue.jpeg" alt="CA Academy — outside the business"></div>
+      <div class="ph"><img src="/images/Chunkz.jpeg" alt="Adan Rispoli — TTE Academy"></div>
+      <div class="ph"><img src="/images/CA-inside.jpeg" alt="Inside the TTE Academy business"></div>
+      <div class="ph"><img src="/images/CA-queue.jpeg" alt="TTE Academy — outside the business"></div>
     </div>
     <div class="reveal">
-      <span class="eyebrow">Your instructor · Aiden Rispoli</span>
+      <span class="eyebrow">Your instructor · Adan Rispoli</span>
       <h2>Taught by someone who actually built a 7-figure truck</h2>
-      <p>Aiden Rispoli runs a seven-figure food truck business. He started exactly where most owners do — one trailer, brutal hours, and the gut feeling that great food alone wasn't turning into real money. He rebuilt the whole operation around pricing, systems, locations and brand until it crossed seven figures a year.</p>
-      <p>CA Academy is where he hands that exact playbook to other trailer owners — straight from the line, not recycled business-school theory. The free webinar is the fastest way to see how he thinks.</p>
+
+      <div class="bio-block">
+        <p>Five years of FIFO. Six figures a year. Then cancer hit — with my daughter only 8 months old. I came out the other side with one rule: <strong>time is not promised.</strong></p>
+        <p>One year later, I built a 7-figure business — from a trailer. This is the exact blueprint I used. Mindset. Menu. Branding. Pricing. Marketing. Hiring. The lot.</p>
+      </div>
+
+      <p>TTE Academy is where he hands that exact playbook to other trailer owners — straight from the line, not recycled business-school theory. The free webinar is the fastest way to see how he thinks.</p>
       <div class="about-stats">
         <div><b>7-Fig</b><span>Annual revenue, food trucks</span></div>
         <div><b>140+</b><span>Owners coached</span></div>
-        <div><b>9 Yrs</b><span>Operating food trucks</span></div>
       </div>
-      <p class="quote">"Your food might be the best on the block. That's not what builds a seven-figure business — the system around it does."<br><span style="font-size:14px;color:var(--muted);font-style:normal;font-family:'Manrope'">— Aiden Rispoli</span></p>
+      <p class="quote">"Your food might be the best on the block. That's not what builds a seven-figure business — the system around it does."<br><span style="font-size:14px;color:var(--muted);font-style:normal;font-family:'Manrope'">— Adan Rispoli</span></p>
       <div class="trust-row">
         <span class="trust-chip">★ 4.9 / 5 avg. rating</span>
         <span class="trust-chip">As seen in Food Truck Nation</span>
         <span class="trust-chip">140+ owners trained</span>
-        <a href="#webinar" class="btn btn-primary" style="margin-left:auto">Get his playbook free <span class="btn-arrow">→</span></a>
       </div>
+      <div class="sec-cta reveal">
+        <a href="#webinar" class="btn btn-primary">See the playbook live — free webinar <span class="btn-arrow">→</span></a>
+        <a href="#" onclick="openGuide();return false;" class="btn btn-ghost">Request a personalized guide</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="sec reviews-sec" id="reviews">
+  <div class="wrap">
+    <div class="reviews-head reveal">
+      <span class="eyebrow">What operators are saying</span>
+      <h2>140+ owners.<br><span class="serif">One playbook.</span></h2>
+      <p>Food truck operators at every stage — from first trailer to multi-truck operations — on what changed after TTE Academy.</p>
+    </div>
+    <div class="reviews-grid">
+      <div class="rv-card reveal">
+        <div class="rv-stars">★★★★★</div>
+        <p class="rv-text">"I was running two trucks at $9k combined. After implementing the location stacking method, we hit $31k in month three. The pricing framework alone was worth 10× the cost of everything."</p>
+        <div class="rv-author">
+          <div class="rv-avatar">MD</div>
+          <div><div class="rv-name">Marcus D.</div><div class="rv-role">Two-truck operator · Houston, TX</div></div>
+        </div>
+      </div>
+      <div class="rv-card reveal">
+        <div class="rv-stars">★★★★★</div>
+        <p class="rv-text">"Stuck at $7,500/month for two years — I thought my food just wasn't good enough. Adan showed me my food was great. My pricing and location choices were bleeding money. We're at $22k now."</p>
+        <div class="rv-author">
+          <div class="rv-avatar">AT</div>
+          <div><div class="rv-name">Aliyah T.</div><div class="rv-role">Solo operator · Atlanta, GA</div></div>
+        </div>
+      </div>
+      <div class="rv-card reveal">
+        <div class="rv-stars">★★★★★</div>
+        <p class="rv-text">"The catering playbook section was my breakthrough. I added $8k/month in catering revenue from my existing customer base in 60 days. Hadn't even considered it before the webinar."</p>
+        <div class="rv-author">
+          <div class="rv-avatar">JT</div>
+          <div><div class="rv-name">Jasmine T.</div><div class="rv-role">Catering + truck · Miami, FL</div></div>
+        </div>
+      </div>
+      <div class="rv-card reveal">
+        <div class="rv-stars">★★★★★</div>
+        <p class="rv-text">"I was ready to close after year one. The webinar showed me exactly where my money was going. 14 months later: second truck, $45k/month. The systems section alone was the whole game."</p>
+        <div class="rv-author">
+          <div class="rv-avatar">BK</div>
+          <div><div class="rv-name">Brandon K.</div><div class="rv-role">Multi-truck · Chicago, IL</div></div>
+        </div>
+      </div>
+      <div class="rv-card reveal">
+        <div class="rv-stars">★★★★★</div>
+        <p class="rv-text">"Skeptical about another 'business guru' webinar. But Adan actually runs trucks — you can tell immediately. The hiring framework saved me from a bad decision that would've cost $30k easy."</p>
+        <div class="rv-author">
+          <div class="rv-avatar">PN</div>
+          <div><div class="rv-name">Priya N.</div><div class="rv-role">Established operator · Los Angeles, CA</div></div>
+        </div>
+      </div>
+      <div class="rv-card rv-card-featured reveal">
+        <div class="rv-stars">★★★★★</div>
+        <p class="rv-text">"His systems let me step off the truck on Tuesdays and Thursdays. That's time with my family I couldn't buy before. Revenue went up <em>and</em> I'm working less. That's the actual win."</p>
+        <div class="rv-author">
+          <div class="rv-avatar">DR</div>
+          <div><div class="rv-name">Derek R.</div><div class="rv-role">Owner-operator · Dallas, TX</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="reviews-cta reveal">
+      <p>Join the operators already on the 7-figure path.</p>
+      <a href="#webinar" class="btn btn-primary">Register for the free webinar <span class="btn-arrow">→</span></a>
     </div>
   </div>
 </section>
@@ -124,16 +279,22 @@
     <div class="reveal">
       <span class="eyebrow">Free Live Training</span>
       <h2 style="font-size:clamp(34px,4.6vw,58px);margin:18px 0">The 45-minute<br>7-figure food<br>truck webinar</h2>
-      <p style="color:var(--cream-dim);font-size:18px">A focused, no-fluff session where Aiden breaks down the levers that actually move a trailer business from "busy" to genuinely profitable — followed by a live Q&A where you can bring your own numbers.</p>
+      <p style="color:var(--cream-dim);font-size:18px">A focused, no-fluff session where Adan breaks down the levers that actually move a trailer business from "busy" to genuinely profitable — followed by a live Q&A where you can bring your own numbers.</p>
       <ul class="web-list">
         <li><span class="num">01</span><div><h4>Where the real money hides</h4><p>The four revenue streams most truck owners under-price or ignore entirely.</p></div></li>
         <li><span class="num">02</span><div><h4>Location & demand strategy</h4><p>How to read foot traffic, lock recurring spots, and stack events.</p></div></li>
         <li><span class="num">03</span><div><h4>Systems that let you step off the line</h4><p>Turning a one-person hustle into a business that runs without you.</p></div></li>
         <li><span class="num">04</span><div><h4>Live Q&A</h4><p>Bring your menu, your margins, your roadblocks. Real answers, on the call.</p></div></li>
       </ul>
+      <div class="webinar-proof">
+        <div class="webinar-proof-stat"><b>140+</b><span>Operators registered</span></div>
+        <div class="webinar-proof-stat"><b>4.9★</b><span>Avg. session rating</span></div>
+        <div class="webinar-proof-stat"><b>45 min</b><span>No filler, no pitch</span></div>
+      </div>
+      <a href="#webinarForm" class="btn btn-ghost" style="margin-top:28px">Jump straight to the form <span class="btn-arrow">↓</span></a>
     </div>
 
-    <div class="card card-flame-top reveal">
+    <div class="card card-flame-top reveal" id="webinarForm">
       <h3>Reserve your free seat</h3>
       <p class="when">Live · 45 minutes · includes Q&A</p>
       <form id="webinarForm" novalidate>
@@ -165,7 +326,7 @@
         </div>
         <label class="check">
           <input type="checkbox" name="list" checked>
-          <span><b>Yes, add me to the CA Academy mailing list</b> — playbooks, case studies and new training announcements. Unsubscribe anytime.</span>
+          <span><b>Yes, add me to the TTE Academy mailing list</b> — playbooks, case studies and new training announcements. Unsubscribe anytime.</span>
         </label>
         <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center">Confirm my free seat <span class="btn-arrow">→</span></button>
         <div class="ok-msg" id="webinarOk">✓ You're on the list. A confirmation and calendar invite will be sent to your email.</div>
@@ -228,8 +389,8 @@
       <ol class="steps">
         <li><div><h4>You attend or request your guide</h4><p>You get value first — no strings attached.</p></div></li>
         <li><div><h4>A secured feedback link lands in your inbox</h4><p>A private, unique link sent by email — no public form, tied only to you.</p></div></li>
-        <li><div><h4>You tell us what landed (and what didn't)</h4><p>Two minutes of honest feedback that directly improves CA Academy.</p></div></li>
-        <li><div><h4>Optional: go deeper with a paid strategy session</h4><p>If you want Aiden's eyes on your business directly, opt in for a personalized paid strategy.</p></div></li>
+        <li><div><h4>You tell us what landed (and what didn't)</h4><p>Two minutes of honest feedback that directly improves TTE Academy.</p></div></li>
+        <li><div><h4>Optional: go deeper with a paid strategy session</h4><p>If you want Adan's eyes on your business directly, opt in for a personalized paid strategy.</p></div></li>
       </ol>
     </div>
 
@@ -273,6 +434,241 @@
   <div class="wrap" style="margin-top:40px;text-align:center">
     <button class="guide-link" onclick="openGuide()">Looking for a plan built specifically around your truck? Request a personalized guide →</button>
   </div>
+  <div class="wrap">
+    <div class="cta-strip reveal">
+      <div class="cta-strip-inner">
+        <div>
+          <p class="cta-strip-eyebrow">Haven't attended the webinar yet?</p>
+          <h3>Start here — it's free and it's 45 minutes.</h3>
+        </div>
+        <a href="#webinar" class="btn btn-primary">Save my free seat <span class="btn-arrow">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT YOU'LL GET — CURRICULUM -->
+<section class="sec curriculum-sec" id="curriculum">
+  <div class="wrap">
+    <div class="curriculum-head reveal">
+      <span class="eyebrow">What you'll get · Full Curriculum</span>
+      <h2>What you'll get.<br><span class="serif">Every module, every lever.</span></h2>
+      <p class="curriculum-tagline">The 7-Figure Food Truck Blueprint: How to Launch, Grow &amp; Scale a Profitable Food Truck Business in Australia 🚚📈🔥</p>
+      <p style="color:var(--cream-dim);font-size:17px;max-width:680px;margin:0 auto">Seven outcome-driven modules built for both new owners starting from scratch and existing operators ready to break through to real money.</p>
+    </div>
+
+    <div class="modules-grid">
+
+      <div class="module-card reveal">
+        <div class="module-num">Module 01</div>
+        <h3 class="module-title">The Food Truck Blueprint</h3>
+        <p class="module-sub">How to Launch a Profitable Food Truck Business From Scratch</p>
+        <ul class="module-list">
+          <li>Choosing the right concept</li>
+          <li>Startup costs explained</li>
+          <li>Avoiding beginner mistakes</li>
+          <li>Setting up for long-term success</li>
+        </ul>
+      </div>
+
+      <div class="module-card reveal">
+        <div class="module-num">Module 02</div>
+        <h3 class="module-title">Finding Goldmine Locations</h3>
+        <p class="module-sub">The Location Strategy That Can Make or Break Your Business</p>
+        <ul class="module-list">
+          <li>How to find high-traffic locations</li>
+          <li>Council permits and approvals</li>
+          <li>Events vs permanent trading</li>
+          <li>Negotiating private sites</li>
+        </ul>
+      </div>
+
+      <div class="module-card reveal">
+        <div class="module-num">Module 03</div>
+        <h3 class="module-title">The Six-Figure Menu Formula</h3>
+        <p class="module-sub">Build a Menu That Sells Fast and Maximises Profit</p>
+        <ul class="module-list">
+          <li>Menu engineering</li>
+          <li>Pricing for profit</li>
+          <li>High-margin products</li>
+          <li>Reducing waste</li>
+        </ul>
+      </div>
+
+      <div class="module-card reveal">
+        <div class="module-num">Module 04</div>
+        <h3 class="module-title">Marketing That Actually Works</h3>
+        <p class="module-sub">How to Build a Queue Before You Even Open</p>
+        <ul class="module-list">
+          <li>Social media strategies</li>
+          <li>Viral content</li>
+          <li>Customer retention</li>
+          <li>Building a local following</li>
+        </ul>
+      </div>
+
+      <div class="module-card reveal">
+        <div class="module-num">Module 05</div>
+        <h3 class="module-title">The Seven-Figure Sales System</h3>
+        <p class="module-sub">How We Scaled From Zero to Seven Figures</p>
+        <ul class="module-list">
+          <li>Daily sales targets</li>
+          <li>Increasing average spend</li>
+          <li>Upselling techniques</li>
+          <li>Building repeat customers</li>
+        </ul>
+      </div>
+
+      <div class="module-card reveal">
+        <div class="module-num">Module 06</div>
+        <h3 class="module-title">Hiring, Systems &amp; Scaling</h3>
+        <p class="module-sub">How to Stop Working In Your Business and Start Leading It</p>
+        <ul class="module-list">
+          <li>Hiring staff</li>
+          <li>Training systems</li>
+          <li>Managing rosters</li>
+          <li>Creating systems that scale</li>
+        </ul>
+      </div>
+
+      <div class="module-card reveal">
+        <div class="module-num">Module 07</div>
+        <h3 class="module-title">The Financial Freedom Framework</h3>
+        <p class="module-sub">Understanding Your Numbers Like a Real Business Owner</p>
+        <ul class="module-list">
+          <li>Profit &amp; loss explained simply</li>
+          <li>Food cost management</li>
+          <li>Labour percentages</li>
+          <li>Scaling without going broke</li>
+        </ul>
+      </div>
+
+      <div class="module-card module-bonus reveal">
+        <div class="module-num module-bonus-tag">Bonus Module</div>
+        <h3 class="module-title">The Mistakes That Cost Food Truck Owners Thousands</h3>
+        <p class="module-sub">Real lessons from the field — what to avoid and why it matters</p>
+        <ul class="module-list">
+          <li>Real mistakes people make</li>
+          <li>How to avoid them</li>
+          <li>Lessons from failures and successes</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="curriculum-cta reveal">
+      <p>Join the waitlist — founding members get in first, at the lowest price we'll ever offer.</p>
+      <a href="#waitlist" class="btn btn-primary">Join the Blueprint waitlist <span class="btn-arrow">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- UPSELLS -->
+<section class="sec upsell-sec" id="accelerators">
+  <div class="wrap">
+    <div class="upsell-head reveal">
+      <span class="eyebrow">Accelerators</span>
+      <h2>Skip the struggle.<br><span class="serif">Solve the 3 biggest bottlenecks.</span></h2>
+      <p style="color:var(--cream-dim);font-size:18px;max-width:720px;margin:18px auto 0">The three biggest struggles for food truck owners and people wanting to start are:</p>
+      <ul class="struggle-list">
+        <li>1. Finding profitable locations</li>
+        <li>2. Getting more customers consistently</li>
+        <li>3. Actually making money after expenses</li>
+      </ul>
+      <p style="color:var(--gold-light);font-family:'Cormorant Garamond',serif;font-style:italic;font-size:20px;margin-top:16px">These accelerators solve them instantly.</p>
+    </div>
+
+    <div class="upsells-grid">
+      
+      <!-- Upsell 1 (Strongest) -->
+      <div class="upsell-card featured-upsell reveal">
+        <div class="upsell-badge">🔥 Highest Converting</div>
+        <h3>The Fully Booked Food Truck System</h3>
+        <p class="upsell-subtitle">Locations, Events &amp; Private Functions</p>
+        <p class="upsell-desc">Learn how to find profitable trading locations, secure private sites, get into high-traffic events, and keep your calendar booked months in advance.</p>
+        <div class="upsell-price">$97 AUD</div>
+        <a href="#waitlist" class="btn btn-primary" style="width:100%;justify-content:center">Get the System <span class="btn-arrow">→</span></a>
+      </div>
+
+      <!-- Upsell 2 -->
+      <div class="upsell-card reveal">
+        <h3>The Food Truck Profit Formula</h3>
+        <p class="upsell-subtitle">Stop Working Hard for Small Margins</p>
+        <p class="upsell-desc">Discover exactly how to price your menu, calculate food costs, increase margins, reduce waste, and keep more money in your pocket every week.</p>
+        <div class="upsell-price">$97 AUD</div>
+        <a href="#waitlist" class="btn btn-ghost" style="width:100%;justify-content:center">Get the Formula <span class="btn-arrow">→</span></a>
+      </div>
+
+      <!-- Upsell 3 -->
+      <div class="upsell-card reveal">
+        <h3>How to Never Worry About Finding Customers Again</h3>
+        <p class="upsell-subtitle">The $0-$10K Per Month Marketing System</p>
+        <p class="upsell-desc">Copy the exact social media, content, and customer retention strategies used to turn a food truck into a local hotspot and generate repeat customers.</p>
+        <div class="upsell-price">$97 AUD</div>
+        <a href="#waitlist" class="btn btn-ghost" style="width:100%;justify-content:center">Get the Strategy <span class="btn-arrow">→</span></a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- BLUEPRINT WAITLIST --><section class="sec waitlist-sec" id="waitlist">
+  <div class="wrap waitlist-grid">
+    <div class="reveal">
+      <span class="eyebrow">The Blueprint · Coming Soon</span>
+      <h2>The full playbook.<br><span class="serif">Be first in the room.</span></h2>
+      <p style="color:var(--cream-dim);font-size:18px;margin:22px 0 32px">The Blueprint is the complete TTE Academy program — every system, every lever, every decision Adan made to take a single trailer to seven figures. We're opening access to a small founding cohort first.</p>
+      <ul class="waitlist-perks">
+        <li>
+          <div class="wp-icon">01</div>
+          <div><h4>Founding member pricing</h4><p>Locked in before the public launch — never available again at this rate.</p></div>
+        </li>
+        <li>
+          <div class="wp-icon">02</div>
+          <div><h4>First access when enrollment opens</h4><p>Waitlist members get the link before we open to the public.</p></div>
+        </li>
+        <li>
+          <div class="wp-icon">03</div>
+          <div><h4>Pre-launch content from Adan</h4><p>Early modules and insights sent directly — before the wider release.</p></div>
+        </li>
+        <li>
+          <div class="wp-icon">04</div>
+          <div><h4>No commitment until you choose to enroll</h4><p>Joining the list is free. Payment only if you decide The Blueprint is right for you.</p></div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="card card-flame-top reveal" id="waitlistCard">
+      <div class="waitlist-badge-row">
+        <span class="waitlist-badge">Founding Access</span>
+        <span class="waitlist-seats">Limited spots</span>
+      </div>
+      <h3>Join the Blueprint waitlist</h3>
+      <p class="when">The full program · Coming soon</p>
+      <form id="waitlistForm" novalidate>
+        <div class="row2">
+          <div class="field"><label>Your name</label><input type="text" name="wname" required placeholder="Jordan Lee"></div>
+          <div class="field"><label>Email</label><input type="email" name="wemail" required placeholder="you@email.com"></div>
+        </div>
+        <div class="field">
+          <label>Business stage</label>
+          <select name="wstage">
+            <option value="">Select your stage…</option>
+            <option>Planning / pre-launch</option>
+            <option>Open under 1 year</option>
+            <option>Open 1–3 years</option>
+            <option>Established, scaling</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center">Secure my spot on the waitlist <span class="btn-arrow">→</span></button>
+        <div class="ok-msg" id="waitlistOk">✓ You're on the list. We'll reach out personally before enrollment opens.</div>
+        <p class="form-note">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+          Free to join. No payment or commitment until you choose to enroll.
+        </p>
+      </form>
+    </div>
+  </div>
 </section>
 
 <!-- MAILING LIST -->
@@ -280,7 +676,7 @@
   <div class="wrap join-inner reveal">
     <span class="eyebrow" style="justify-content:center">Join the list</span>
     <h2>Get the playbooks <span class="serif">before everyone else.</span></h2>
-    <p>Case studies, pricing breakdowns, location strategy and first access to new CA Academy trainings — sent to operators who are serious about the seven-figure path.</p>
+    <p>Case studies, pricing breakdowns, location strategy and first access to new TTE Academy trainings — sent to operators who are serious about the seven-figure path.</p>
     <form id="joinForm" class="join-form" novalidate>
       <input type="email" name="jemail" required placeholder="Enter your email">
       <button type="submit" class="btn btn-primary">Join free <span class="btn-arrow">→</span></button>
@@ -304,7 +700,7 @@
             <text x="5" y="35" font-family="serif" font-size="24" font-weight="bold" fill="#6B3FA0">C</text>
             <text x="20" y="35" font-family="serif" font-size="24" font-weight="bold" fill="#C9A84C">A</text>
           </svg>
-          <span>CA ACADEMY<small>The Blueprint</small></span>
+          <span>TTE ACADEMY<small>The Blueprint</small></span>
         </a>
         <p>The trailer-to-7-figures playbook, taught by an operator who built it on the street.</p>
       </div>
@@ -314,28 +710,102 @@
           <a href="#webinar">Free Webinar</a>
           <a href="#" onclick="openGuide();return false;">Personalized Guide</a>
           <a href="#strategy">Strategy Session</a>
+          <a href="#curriculum">What you'll get</a>
+          <a href="#waitlist">Blueprint Waitlist</a>
         </div>
         <div>
           <h5>About</h5>
-          <a href="#about">Aiden Rispoli</a>
+          <a href="#about">Adan Rispoli</a>
           <a href="#join">Mailing List</a>
           <a href="#strategy">Give Feedback</a>
         </div>
         <div>
           <h5>Contact</h5>
-          <a href="mailto:hello@caacademy.com">hello@caacademy.com</a>
-          <a href="https://instagram.com/caacademy" target="_blank" rel="noopener">Instagram</a>
-          <a href="https://tiktok.com/@caacademy" target="_blank" rel="noopener">TikTok</a>
+          <a href="mailto:hello@tteacademy.com">hello@tteacademy.com</a>
+          <a href="https://instagram.com/tteacademy" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://tiktok.com/@tteacademy" target="_blank" rel="noopener">TikTok</a>
         </div>
       </div>
     </div>
     <div class="foot-bottom">
-      <span>© <span id="yr"></span> CA Academy. All rights reserved.</span>
+      <span>© <span id="yr"></span> TTE Academy. All rights reserved.</span>
       <span>Privacy · Terms</span>
     </div>
   </div>
 </footer>
 
 <script src="js/main.js" defer></script>
+<script>
+(function() {
+  var banner = document.getElementById('cdBanner');
+  var target = null;
+  var ticker = null;
+
+  function pad(n) { return String(n).padStart(2, '0'); }
+
+  function tick() {
+    if (!target) return;
+    var now = Date.now();
+    var diff = target - now;
+    if (diff <= 0) {
+      document.getElementById('cdDays').textContent = '00';
+      document.getElementById('cdHours').textContent = '00';
+      document.getElementById('cdMins').textContent = '00';
+      document.getElementById('cdSecs').textContent = '00';
+      document.getElementById('cdTitle').textContent = 'LIVE NOW';
+      banner.classList.add('cd-live');
+      return;
+    }
+    var s = Math.floor(diff / 1000);
+    var d = Math.floor(s / 86400);
+    var h = Math.floor((s % 86400) / 3600);
+    var m = Math.floor((s % 3600) / 60);
+    var sc = s % 60;
+    document.getElementById('cdDays').textContent = pad(d);
+    document.getElementById('cdHours').textContent = pad(h);
+    document.getElementById('cdMins').textContent = pad(m);
+    document.getElementById('cdSecs').textContent = pad(sc);
+  }
+
+  function showBanner(data) {
+    target = new Date(data.target_datetime).getTime();
+    document.getElementById('cdTitle').textContent = data.title || 'Free Webinar';
+    document.getElementById('cdLink').href = data.webinar_link;
+    banner.style.display = 'block';
+    document.body.style.paddingTop = '64px';
+    tick();
+    clearInterval(ticker);
+    ticker = setInterval(tick, 1000);
+  }
+
+  function hideBanner() {
+    banner.style.display = 'none';
+    document.body.style.paddingTop = '';
+    clearInterval(ticker);
+  }
+
+  document.getElementById('cdDismiss').addEventListener('click', function() {
+    sessionStorage.setItem('cdDismissed', '1');
+    hideBanner();
+  });
+
+  async function fetchCountdown() {
+    if (sessionStorage.getItem('cdDismissed')) return;
+    try {
+      var res = await fetch('/api/countdown');
+      if (!res.ok) return;
+      var data = await res.json();
+      if (data && data.is_active) {
+        showBanner(data);
+      } else {
+        hideBanner();
+      }
+    } catch (e) { /* silent */ }
+  }
+
+  fetchCountdown();
+  setInterval(fetchCountdown, 5 * 60 * 1000);
+})();
+</script>
 </body>
 </html>

@@ -55,10 +55,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  wire('webinarForm', 'webinarOk');
-  wire('guideForm',   'guideOk');
-  wire('fbForm',      'fbOk');
-  wire('joinForm',    'joinOk');
+  wire('webinarForm',  'webinarOk');
+  wire('guideForm',    'guideOk');
+  wire('fbForm',       'fbOk');
+  wire('joinForm',     'joinOk');
+  wire('waitlistForm', 'waitlistOk');
 
   // personalized-guide modal
   const guideModal = document.getElementById('guideModal');

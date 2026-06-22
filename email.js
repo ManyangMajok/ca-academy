@@ -30,8 +30,8 @@ if (RESEND_API_KEY) {
   };
 }
 
-const FROM_EMAIL = process.env.FROM_EMAIL || 'noreply@caacademy.com';
-const BRAND_NAME = 'CA Academy';
+const FROM_EMAIL = process.env.FROM_EMAIL || 'noreply@tteacademy.com';
+const BRAND_NAME = 'TTE Academy';
 
 // Send webinar confirmation email
 export async function sendWebinarConfirm({ fname, lname, email, slot }) {
@@ -53,7 +53,7 @@ export async function sendWebinarConfirm({ fname, lname, email, slot }) {
           </div>
           
           <p>See you on the call!</p>
-          <p style="color: #8C8472; font-size: 12px;">— Aiden Rispoli & the CA Academy team</p>
+          <p style="color: #8C8472; font-size: 12px;">— Adan Rispoli & the TTE Academy team</p>
         </div>
       `
     });
@@ -86,7 +86,7 @@ export async function sendGuideConfirm({ gname, gemail, gcity, grev, gnote }) {
           </div>
           
           <p>You'll hear from us within 24 hours with your personalized guide + pricing details.</p>
-          <p style="color: #8C8472; font-size: 12px;">— Aiden Rispoli & the CA Academy team</p>
+          <p style="color: #8C8472; font-size: 12px;">— Adan Rispoli & the TTE Academy team</p>
         </div>
       `
     });
@@ -115,17 +115,17 @@ export async function sendFeedbackLink({ fname, femail, feedbackUrl, paid }) {
           </div>
           
           <p style="font-size: 14px; color: #8C8472;">
-            This link is unique to you and expires after one use. Your feedback stays private and directly shapes future CA Academy updates.
+            This link is unique to you and expires after one use. Your feedback stays private and directly shapes future TTE Academy updates.
           </p>
           
           ${paid ? `
             <div style="background: rgba(242, 183, 5, 0.1); border: 1px solid rgba(242, 183, 5, 0.4); padding: 15px; border-radius: 4px; margin: 20px 0;">
               <p style="margin: 0; color: #F2B705;"><strong>👉 You also checked "interested in strategy session"</strong></p>
-              <p style="margin: 5px 0 0 0; font-size: 14px;">When you submit feedback, we'll include personalized pricing for a 1:1 session with Aiden.</p>
+              <p style="margin: 5px 0 0 0; font-size: 14px;">When you submit feedback, we'll include personalized pricing for a 1:1 session with Adan.</p>
             </div>
           ` : ''}
           
-          <p style="color: #8C8472; font-size: 12px;">— CA Academy team</p>
+          <p style="color: #8C8472; font-size: 12px;">— TTE Academy team</p>
         </div>
       `
     });
@@ -141,15 +141,15 @@ export async function sendJoinListWelcome({ jemail }) {
     await resend.emails.send({
       from: FROM_EMAIL,
       to: jemail,
-      subject: `📚 Welcome to CA Academy's mailing list`,
+      subject: `📚 Welcome to TTE Academy's mailing list`,
       html: `
         <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
           <h2 style="color: #FF6A1A;">Welcome!</h2>
-          <p>You're on our list for case studies, pricing breakdowns, location strategy, and first access to new CA Academy trainings.</p>
+          <p>You're on our list for case studies, pricing breakdowns, location strategy, and first access to new TTE Academy trainings.</p>
           
           <p style="font-size: 14px; color: #8C8472; margin-top: 30px;">
             Next playbook drops in your inbox soon. <br/>
-            — Aiden Rispoli & the CA Academy team
+            — Adan Rispoli & the TTE Academy team
           </p>
         </div>
       `
@@ -157,6 +157,49 @@ export async function sendJoinListWelcome({ jemail }) {
     console.log(`✓ Welcome email sent to ${jemail}`);
   } catch (err) {
     console.error('Failed to send welcome email:', err);
+  }
+}
+
+// Send Blueprint waitlist confirmation
+export async function sendWaitlistConfirm({ wname, wemail }) {
+  try {
+    await resend.emails.send({
+      from: FROM_EMAIL,
+      to: wemail,
+      subject: `You're on the Blueprint waiting list — ${BRAND_NAME}`,
+      html: `
+        <div style="font-family:sans-serif;max-width:600px;margin:0 auto;background:#0E0D0B;color:#F5EEE0">
+          <div style="padding:32px 32px 24px;border-bottom:1px solid rgba(201,168,76,.25)">
+            <p style="font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#C9A84C;margin:0 0 14px">TTE Academy · The Blueprint</p>
+            <h2 style="font-family:Georgia,serif;font-size:26px;margin:0 0 10px;color:#F5EEE0">You're on the list, ${wname}.</h2>
+            <p style="color:#C4BEB3;margin:0;font-size:15px">Your spot on the TTE Academy Blueprint waitlist is secured.</p>
+          </div>
+
+          <div style="padding:28px 32px">
+            <p style="color:#C4BEB3;font-size:15px;line-height:1.7">The Blueprint is the full TTE Academy program — the complete system Adan used to take a single trailer to seven figures. Mindset, menu engineering, pricing, location strategy, branding, hiring, and scale. All of it.</p>
+
+            <div style="background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.3);border-radius:4px;padding:20px;margin:24px 0">
+              <p style="color:#C9A84C;font-weight:700;font-size:13px;letter-spacing:.08em;text-transform:uppercase;margin:0 0 12px">As a waitlist member, you get:</p>
+              <ul style="color:#C4BEB3;font-size:14px;margin:0;padding-left:20px;line-height:2">
+                <li>First notification when enrollment opens</li>
+                <li>Founding member pricing — locked in before the public launch</li>
+                <li>Direct early access before the wider release</li>
+                <li>Pre-launch content drops from Adan</li>
+              </ul>
+            </div>
+
+            <p style="color:#7A7369;font-size:13px;line-height:1.7">In the meantime, if you haven't attended the free webinar, that's where to start — it's 45 minutes with Adan breaking down the levers that actually move a trailer business.</p>
+          </div>
+
+          <div style="padding:20px 32px;border-top:1px solid rgba(201,168,76,.15)">
+            <p style="color:#7A7369;font-size:12px;margin:0">— Adan Rispoli &amp; the TTE Academy team<br>Questions? <a href="mailto:hello@tteacademy.com" style="color:#C9A84C">hello@tteacademy.com</a></p>
+          </div>
+        </div>
+      `
+    });
+    console.log(`✓ Blueprint waitlist confirmation sent to ${wemail}`);
+  } catch (err) {
+    console.error('Failed to send waitlist email:', err);
   }
 }
 

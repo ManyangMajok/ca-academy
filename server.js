@@ -3,8 +3,8 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import { fileURLToPath } from 'url';
 import path from 'path';
-import { initDb, insertWebinarLead, insertGuideRequest, insertFeedbackLink, insertJoinList, getWebinarLeads, getGuideRequests, getMailingList, getFeedbackLinks, removeMailingByEmail } from './db.js';
-import { sendWebinarConfirm, sendGuideConfirm, sendFeedbackLink, sendJoinListWelcome, sendRawEmail } from './email.js';
+import { initDb, insertWebinarLead, insertGuideRequest, insertFeedbackLink, insertJoinList, getWebinarLeads, getGuideRequests, getMailingList, getFeedbackLinks, removeMailingByEmail, setCountdown, getActiveCountdown, clearCountdown, insertBlueprintWaitlist, getBlueprintWaitlist } from './db.js';
+import { sendWebinarConfirm, sendGuideConfirm, sendFeedbackLink, sendJoinListWelcome, sendRawEmail, sendWaitlistConfirm } from './email.js';
 import { enqueueEmails, getQueueLength } from './sendQueue.js';
 
 dotenv.config();
@@ -35,7 +35,7 @@ app.post('/api/webinar', async (req, res) => {
       return res.status(400).json({ error: 'Missing required fields' });
     }
     
-    const result = insertWebinarLead({ fname, lname, email, stage, slot, list: list || false });
+    const result = await insertWebinarLead({ fname, lname, email, stage, slot, list: list || false });
     
     if (result.success) {
       // Send confirmation email
@@ -59,7 +59,7 @@ app.post('/api/guide', async (req, res) => {
       return res.status(400).json({ error: 'Missing required fields' });
     }
     
-    const result = insertGuideRequest({ gname, gemail, gcity, grev, gnote });
+    const result = await insertGuideRequest({ gname, gemail, gcity, grev, gnote });
     
     if (result.success) {
       await sendGuideConfirm({ gname, gemail, gcity, grev, gnote });
@@ -82,7 +82,7 @@ app.post('/api/feedback', async (req, res) => {
       return res.status(400).json({ error: 'Missing required fields' });
     }
     
-    const result = insertFeedbackLink({ fname, femail, fwhat, paid: paid || false, budget });
+    const result = await insertFeedbackLink({ fname, femail, fwhat, paid: paid || false, budget });
     
     if (result.success) {
       const token = result.token;
@@ -107,11 +107,34 @@ app.post('/api/join', async (req, res) => {
       return res.status(400).json({ error: 'Email required' });
     }
     
-    const result = insertJoinList({ jemail });
+    const result = await insertJoinList({ jemail });
     
     if (result.success) {
       await sendJoinListWelcome({ jemail });
       return res.json({ success: true, message: 'Added to mailing list' });
+    } else {
+      return res.status(500).json({ error: result.error });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// Blueprint waitlist signup
+app.post('/api/waitlist', async (req, res) => {
+  try {
+    const { wname, wemail, wstage } = req.body;
+
+    if (!wname || !wemail) {
+      return res.status(400).json({ error: 'Name and email required' });
+    }
+
+    const result = await insertBlueprintWaitlist({ wname, wemail, wstage });
+
+    if (result.success) {
+      await sendWaitlistConfirm({ wname, wemail });
+      return res.json({ success: true, message: 'Added to Blueprint waitlist' });
     } else {
       return res.status(500).json({ error: result.error });
     }
@@ -134,12 +157,16 @@ function checkAdmin(req, res, next) {
   next();
 }
 
-// Admin auth (simple API-key check)
+// Admin auth — email + password, returns the API token
 app.post('/api/admin/auth', (req, res) => {
-  const { apiKey } = req.body || {};
-  if (!process.env.ADMIN_KEY) return res.status(500).json({ success: false, message: 'Server admin key not set' });
-  if (apiKey && apiKey === process.env.ADMIN_KEY) return res.json({ success: true });
-  return res.status(401).json({ success: false, message: 'Invalid API key' });
+  const { email, password } = req.body || {};
+  if (!process.env.ADMIN_EMAIL || !process.env.ADMIN_PASSWORD || !process.env.ADMIN_KEY) {
+    return res.status(500).json({ success: false, message: 'Admin credentials not configured on server' });
+  }
+  if (email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD) {
+    return res.json({ success: true, token: process.env.ADMIN_KEY });
+  }
+  return res.status(401).json({ success: false, message: 'Invalid email or password' });
 });
 
 // Admin: get webinar leads
@@ -186,6 +213,17 @@ app.get('/api/admin/feedback', checkAdmin, async (req, res) => {
   }
 });
 
+// Admin: get blueprint waitlist
+app.get('/api/admin/waitlist', checkAdmin, async (req, res) => {
+  try {
+    const rows = await getBlueprintWaitlist();
+    res.json(rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to load waitlist' });
+  }
+});
+
 // Admin: remove mailing by email
 app.delete('/api/admin/mailing/:email', checkAdmin, async (req, res) => {
   try {
@@ -208,7 +246,8 @@ app.post('/api/admin/broadcast', checkAdmin, async (req, res) => {
     const sets = await Promise.all([
       audiences.includes('webinar') ? getWebinarLeads() : Promise.resolve([]),
       audiences.includes('guides') ? getGuideRequests() : Promise.resolve([]),
-      audiences.includes('mailing') ? getMailingList() : Promise.resolve([])
+      audiences.includes('mailing') ? getMailingList() : Promise.resolve([]),
+      audiences.includes('waitlist') ? getBlueprintWaitlist() : Promise.resolve([])
     ]);
 
     const emails = new Set();
@@ -218,6 +257,8 @@ app.post('/api/admin/broadcast', checkAdmin, async (req, res) => {
     (sets[1] || []).forEach(r => r.gemail && emails.add(r.gemail));
     // mailing: jemail
     (sets[2] || []).forEach(r => r.jemail && emails.add(r.jemail));
+    // waitlist: wemail
+    (sets[3] || []).forEach(r => r.wemail && emails.add(r.wemail));
 
     const list = Array.from(emails);
     if (list.length === 0) return res.json({ success: true, count: 0 });
@@ -228,6 +269,54 @@ app.post('/api/admin/broadcast', checkAdmin, async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ success: false, message: 'Broadcast failed' });
+  }
+});
+
+// Public: get active countdown
+app.get('/api/countdown', async (req, res) => {
+  try {
+    const countdown = await getActiveCountdown();
+    res.json(countdown || null);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to load countdown' });
+  }
+});
+
+// Admin: set countdown
+app.post('/api/admin/countdown', checkAdmin, async (req, res) => {
+  try {
+    const { title, target_datetime, webinar_link } = req.body || {};
+    if (!target_datetime || !webinar_link) {
+      return res.status(400).json({ success: false, message: 'target_datetime and webinar_link are required' });
+    }
+    const result = await setCountdown({ title, target_datetime, webinar_link });
+    res.json(result);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, message: 'Failed to set countdown' });
+  }
+});
+
+// Admin: clear countdown
+app.delete('/api/admin/countdown', checkAdmin, async (req, res) => {
+  try {
+    const result = await clearCountdown();
+    res.json(result);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, message: 'Failed to clear countdown' });
+  }
+});
+
+// Admin: get current countdown (for admin panel)
+app.get('/api/admin/countdown', checkAdmin, async (req, res) => {
+  try {
+    const countdown = await getActiveCountdown();
+    res.json(countdown || null);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to load countdown' });
   }
 });
 
@@ -243,6 +332,10 @@ app.use((err, req, res, next) => {
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`✓ CA Academy server running on port ${PORT}`);
-});
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(PORT, () => {
+    console.log(`✓ TTE Academy server running on port ${PORT}`);
+  });
+}
+
+export default app;

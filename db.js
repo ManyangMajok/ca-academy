@@ -1,243 +1,182 @@
-import sqlite3 from 'sqlite3';
+import mysql from 'mysql2/promise';
 import { v4 as uuidv4 } from 'uuid';
-import path from 'path';
-import { fileURLToPath } from 'url';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const pool = mysql.createPool({
+  host: process.env.DB_HOST || 'localhost',
+  port: parseInt(process.env.DB_PORT || '3306'),
+  user: process.env.DB_USER || 'root',
+  password: process.env.DB_PASSWORD || '',
+  database: process.env.DB_NAME || 'ca_academy',
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0,
+  timezone: '+00:00'
+});
 
-const DB_PATH = path.join(__dirname, 'data.db');
-let db;
-
-// Initialize database
-export function initDb() {
-  db = new sqlite3.Database(DB_PATH, (err) => {
-    if (err) {
-      console.error('❌ Database connection error:', err);
-      return;
-    }
-    console.log('✓ Connected to SQLite database');
-    createTables();
-  });
+export async function initDb() {
+  try {
+    const conn = await pool.getConnection();
+    console.log('✓ Connected to MySQL database');
+    await conn.execute(`
+      CREATE TABLE IF NOT EXISTS blueprint_waitlist (
+        id VARCHAR(36) PRIMARY KEY,
+        wname VARCHAR(255) NOT NULL,
+        wemail VARCHAR(255) NOT NULL UNIQUE,
+        wstage VARCHAR(100),
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+    conn.release();
+  } catch (err) {
+    console.error('❌ MySQL connection error:', err.message);
+    console.error('Make sure MySQL is running and DB_HOST/DB_USER/DB_PASSWORD/DB_NAME are set in .env');
+    process.exit(1);
+  }
 }
 
-function createTables() {
-  db.serialize(() => {
-    // Webinar leads table
-    db.run(`
-      CREATE TABLE IF NOT EXISTS webinar_leads (
-        id TEXT PRIMARY KEY,
-        fname TEXT NOT NULL,
-        lname TEXT NOT NULL,
-        email TEXT UNIQUE NOT NULL,
-        stage TEXT,
-        slot TEXT,
-        mailing_list INTEGER DEFAULT 0,
-        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-      )
-    `, (err) => {
-      if (err) console.error('webinar_leads table error:', err);
-      else console.log('✓ webinar_leads table ready');
-    });
-
-    // Guide requests table
-    db.run(`
-      CREATE TABLE IF NOT EXISTS guide_requests (
-        id TEXT PRIMARY KEY,
-        gname TEXT NOT NULL,
-        gemail TEXT UNIQUE NOT NULL,
-        gcity TEXT,
-        grev TEXT,
-        gnote TEXT,
-        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-      )
-    `, (err) => {
-      if (err) console.error('guide_requests table error:', err);
-      else console.log('✓ guide_requests table ready');
-    });
-
-    // Feedback links table
-    db.run(`
-      CREATE TABLE IF NOT EXISTS feedback_links (
-        id TEXT PRIMARY KEY,
-        token TEXT UNIQUE NOT NULL,
-        fname TEXT NOT NULL,
-        femail TEXT NOT NULL,
-        fwhat TEXT,
-        paid INTEGER DEFAULT 0,
-        budget TEXT,
-        used INTEGER DEFAULT 0,
-        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-      )
-    `, (err) => {
-      if (err) console.error('feedback_links table error:', err);
-      else console.log('✓ feedback_links table ready');
-    });
-
-    // Mailing list table
-    db.run(`
-      CREATE TABLE IF NOT EXISTS mailing_list (
-        id TEXT PRIMARY KEY,
-        jemail TEXT UNIQUE NOT NULL,
-        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-      )
-    `, (err) => {
-      if (err) console.error('mailing_list table error:', err);
-      else console.log('✓ mailing_list table ready');
-    });
-  });
-}
-
-// Insert webinar lead
-export function insertWebinarLead({ fname, lname, email, stage, slot, list }) {
-  return new Promise((resolve) => {
+export async function insertWebinarLead({ fname, lname, email, stage, slot, list }) {
+  try {
     const id = uuidv4();
-    db.run(
-      `INSERT INTO webinar_leads (id, fname, lname, email, stage, slot, mailing_list)
-       VALUES (?, ?, ?, ?, ?, ?, ?)`,
-      [id, fname, lname, email, stage, slot, list ? 1 : 0],
-      function(err) {
-        if (err) {
-          console.error('Insert webinar lead error:', err);
-          resolve({ success: false, error: err.message });
-        } else {
-          console.log(`✓ Webinar lead added: ${email}`);
-          resolve({ success: true, id });
-        }
-      }
+    await pool.execute(
+      `INSERT INTO webinar_leads (id, fname, lname, email, stage, slot, mailing_list) VALUES (?, ?, ?, ?, ?, ?, ?)`,
+      [id, fname, lname, email, stage, slot, list ? 1 : 0]
     );
-  });
+    console.log(`✓ Webinar lead added: ${email}`);
+    return { success: true, id };
+  } catch (err) {
+    if (err.code === 'ER_DUP_ENTRY') return { success: false, error: 'Email already registered' };
+    console.error('Insert webinar lead error:', err);
+    return { success: false, error: err.message };
+  }
 }
 
-// Insert guide request
-export function insertGuideRequest({ gname, gemail, gcity, grev, gnote }) {
-  return new Promise((resolve) => {
+export async function insertGuideRequest({ gname, gemail, gcity, grev, gnote }) {
+  try {
     const id = uuidv4();
-    db.run(
-      `INSERT INTO guide_requests (id, gname, gemail, gcity, grev, gnote)
-       VALUES (?, ?, ?, ?, ?, ?)`,
-      [id, gname, gemail, gcity, grev, gnote],
-      function(err) {
-        if (err) {
-          console.error('Insert guide request error:', err);
-          resolve({ success: false, error: err.message });
-        } else {
-          console.log(`✓ Guide request added: ${gemail}`);
-          resolve({ success: true, id });
-        }
-      }
+    await pool.execute(
+      `INSERT INTO guide_requests (id, gname, gemail, gcity, grev, gnote) VALUES (?, ?, ?, ?, ?, ?)`,
+      [id, gname, gemail, gcity, grev, gnote]
     );
-  });
+    console.log(`✓ Guide request added: ${gemail}`);
+    return { success: true, id };
+  } catch (err) {
+    if (err.code === 'ER_DUP_ENTRY') return { success: false, error: 'Email already submitted' };
+    console.error('Insert guide request error:', err);
+    return { success: false, error: err.message };
+  }
 }
 
-// Insert feedback link
-export function insertFeedbackLink({ fname, femail, fwhat, paid, budget }) {
-  return new Promise((resolve) => {
+export async function insertFeedbackLink({ fname, femail, fwhat, paid, budget }) {
+  try {
     const id = uuidv4();
     const token = uuidv4();
-    db.run(
-      `INSERT INTO feedback_links (id, token, fname, femail, fwhat, paid, budget)
-       VALUES (?, ?, ?, ?, ?, ?, ?)`,
-      [id, token, fname, femail, fwhat, paid ? 1 : 0, budget],
-      function(err) {
-        if (err) {
-          console.error('Insert feedback link error:', err);
-          resolve({ success: false, error: err.message });
-        } else {
-          console.log(`✓ Feedback link created: ${femail}`);
-          resolve({ success: true, id, token });
-        }
-      }
+    await pool.execute(
+      `INSERT INTO feedback_links (id, token, fname, femail, fwhat, paid, budget) VALUES (?, ?, ?, ?, ?, ?, ?)`,
+      [id, token, fname, femail, fwhat, paid ? 1 : 0, budget]
     );
-  });
+    console.log(`✓ Feedback link created: ${femail}`);
+    return { success: true, id, token };
+  } catch (err) {
+    console.error('Insert feedback link error:', err);
+    return { success: false, error: err.message };
+  }
 }
 
-// Insert mailing list
-export function insertJoinList({ jemail }) {
-  return new Promise((resolve) => {
+export async function insertJoinList({ jemail }) {
+  try {
     const id = uuidv4();
-    db.run(
+    await pool.execute(
       `INSERT INTO mailing_list (id, jemail) VALUES (?, ?)`,
-      [id, jemail],
-      function(err) {
-        if (err) {
-          console.error('Insert mailing list error:', err);
-          resolve({ success: false, error: err.message });
-        } else {
-          console.log(`✓ Email added to mailing list: ${jemail}`);
-          resolve({ success: true, id });
-        }
-      }
+      [id, jemail]
     );
-  });
+    console.log(`✓ Email added to mailing list: ${jemail}`);
+    return { success: true, id };
+  } catch (err) {
+    if (err.code === 'ER_DUP_ENTRY') return { success: false, error: 'Email already subscribed' };
+    console.error('Insert mailing list error:', err);
+    return { success: false, error: err.message };
+  }
 }
 
-// Get all webinar leads (for admin)
-export function getWebinarLeads() {
-  return new Promise((resolve) => {
-    db.all(`SELECT * FROM webinar_leads ORDER BY created_at DESC`, (err, rows) => {
-      if (err) {
-        console.error(err);
-        resolve([]);
-      } else {
-        resolve(rows || []);
-      }
-    });
-  });
+export async function getWebinarLeads() {
+  const [rows] = await pool.execute(`SELECT * FROM webinar_leads ORDER BY created_at DESC`);
+  return rows;
 }
 
-// Get all guide requests
-export function getGuideRequests() {
-  return new Promise((resolve) => {
-    db.all(`SELECT * FROM guide_requests ORDER BY created_at DESC`, (err, rows) => {
-      if (err) {
-        console.error(err);
-        resolve([]);
-      } else {
-        resolve(rows || []);
-      }
-    });
-  });
+export async function getGuideRequests() {
+  const [rows] = await pool.execute(`SELECT * FROM guide_requests ORDER BY created_at DESC`);
+  return rows;
 }
 
-// Get mailing list
-export function getMailingList() {
-  return new Promise((resolve) => {
-    db.all(`SELECT * FROM mailing_list ORDER BY created_at DESC`, (err, rows) => {
-      if (err) {
-        console.error(err);
-        resolve([]);
-      } else {
-        resolve(rows || []);
-      }
-    });
-  });
+export async function getMailingList() {
+  const [rows] = await pool.execute(`SELECT * FROM mailing_list ORDER BY created_at DESC`);
+  return rows;
 }
 
-// Get feedback links
-export function getFeedbackLinks() {
-  return new Promise((resolve) => {
-    db.all(`SELECT * FROM feedback_links ORDER BY created_at DESC`, (err, rows) => {
-      if (err) {
-        console.error(err);
-        resolve([]);
-      } else {
-        resolve(rows || []);
-      }
-    });
-  });
+export async function getFeedbackLinks() {
+  const [rows] = await pool.execute(`SELECT * FROM feedback_links ORDER BY created_at DESC`);
+  return rows;
 }
 
-// Remove mailing list entry by email
-export function removeMailingByEmail(jemail) {
-  return new Promise((resolve) => {
-    db.run(`DELETE FROM mailing_list WHERE jemail = ?`, [jemail], function(err) {
-      if (err) {
-        console.error('Remove mailing error:', err);
-        resolve({ success: false, error: err.message });
-      } else {
-        resolve({ success: true, changes: this.changes });
-      }
-    });
-  });
+export async function removeMailingByEmail(jemail) {
+  try {
+    const [result] = await pool.execute(`DELETE FROM mailing_list WHERE jemail = ?`, [jemail]);
+    return { success: true, changes: result.affectedRows };
+  } catch (err) {
+    console.error('Remove mailing error:', err);
+    return { success: false, error: err.message };
+  }
+}
+
+export async function setCountdown({ title, target_datetime, webinar_link }) {
+  try {
+    await pool.execute(`UPDATE countdown SET is_active = 0`);
+    const id = uuidv4();
+    await pool.execute(
+      `INSERT INTO countdown (id, title, target_datetime, webinar_link, is_active) VALUES (?, ?, ?, ?, 1)`,
+      [id, title || 'Free Webinar', target_datetime, webinar_link]
+    );
+    return { success: true, id };
+  } catch (err) {
+    console.error('Set countdown error:', err);
+    return { success: false, error: err.message };
+  }
+}
+
+export async function getActiveCountdown() {
+  const [rows] = await pool.execute(
+    `SELECT * FROM countdown WHERE is_active = 1 ORDER BY created_at DESC LIMIT 1`
+  );
+  return rows[0] || null;
+}
+
+export async function insertBlueprintWaitlist({ wname, wemail, wstage }) {
+  try {
+    const id = uuidv4();
+    await pool.execute(
+      `INSERT INTO blueprint_waitlist (id, wname, wemail, wstage) VALUES (?, ?, ?, ?)`,
+      [id, wname, wemail, wstage || null]
+    );
+    console.log(`✓ Blueprint waitlist added: ${wemail}`);
+    return { success: true, id };
+  } catch (err) {
+    if (err.code === 'ER_DUP_ENTRY') return { success: false, error: 'Email already on the waitlist' };
+    console.error('Insert blueprint waitlist error:', err);
+    return { success: false, error: err.message };
+  }
+}
+
+export async function getBlueprintWaitlist() {
+  const [rows] = await pool.execute(`SELECT * FROM blueprint_waitlist ORDER BY created_at DESC`);
+  return rows;
+}
+
+export async function clearCountdown() {
+  try {
+    await pool.execute(`UPDATE countdown SET is_active = 0`);
+    return { success: true };
+  } catch (err) {
+    console.error('Clear countdown error:', err);
+    return { success: false, error: err.message };
+  }
 }

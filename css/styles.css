@@ -44,7 +44,6 @@ section{position:relative;z-index:2}
   letter-spacing:0.36em;text-transform:uppercase;color:var(--gold);
   display:inline-flex;align-items:center;gap:14px;
 }
-.eyebrow::before{content:"";width:34px;height:1px;background:var(--gold)}
 
 h1,h2,h3{font-family:'Cinzel',serif;font-weight:700;line-height:1.0;letter-spacing:0.06em;text-transform:uppercase}
 .serif{font-family:'Cormorant Garamond',serif;font-style:italic;text-transform:none;font-weight:500}

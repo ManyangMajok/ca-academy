@@ -1,7 +1,7 @@
 {
-  "name": "ca-academy-backend",
+  "name": "tte-academy-backend",
   "version": "1.0.0",
-  "description": "CA Academy backend API and form handler",
+  "description": "TTE Academy backend API and form handler",
   "main": "server.js",
   "type": "module",
   "scripts": {
@@ -10,14 +10,15 @@
     "init-db": "node scripts/init-db.js"
   },
   "dependencies": {
-    "express": "^4.18.2",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
-    "sqlite3": "^5.1.6",
+    "express": "^4.18.2",
+    "mysql2": "^3.22.4",
     "resend": "^2.0.0",
+    "sharp": "^0.35.1",
+    "sqlite3": "^5.1.6",
     "uuid": "^9.0.1"
   },
-  "devDependencies": {},
   "engines": {
     "node": ">=18.0.0"
   }

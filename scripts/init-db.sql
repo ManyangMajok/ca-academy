@@ -1,0 +1,53 @@
+-- TTE Academy — MySQL Schema
+-- Run once: mysql -u root -p < scripts/init-db.sql
+
+CREATE DATABASE IF NOT EXISTS ca_academy CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE ca_academy;
+
+CREATE TABLE IF NOT EXISTS webinar_leads (
+  id VARCHAR(36) PRIMARY KEY,
+  fname VARCHAR(100) NOT NULL,
+  lname VARCHAR(100) NOT NULL,
+  email VARCHAR(255) UNIQUE NOT NULL,
+  stage VARCHAR(100),
+  slot VARCHAR(100),
+  mailing_list TINYINT(1) DEFAULT 0,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS guide_requests (
+  id VARCHAR(36) PRIMARY KEY,
+  gname VARCHAR(100) NOT NULL,
+  gemail VARCHAR(255) UNIQUE NOT NULL,
+  gcity VARCHAR(100),
+  grev VARCHAR(100),
+  gnote TEXT,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS feedback_links (
+  id VARCHAR(36) PRIMARY KEY,
+  token VARCHAR(36) UNIQUE NOT NULL,
+  fname VARCHAR(100) NOT NULL,
+  femail VARCHAR(255) NOT NULL,
+  fwhat TEXT,
+  paid TINYINT(1) DEFAULT 0,
+  budget VARCHAR(100),
+  used TINYINT(1) DEFAULT 0,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS mailing_list (
+  id VARCHAR(36) PRIMARY KEY,
+  jemail VARCHAR(255) UNIQUE NOT NULL,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS countdown (
+  id VARCHAR(36) PRIMARY KEY,
+  title VARCHAR(255) DEFAULT 'Free Webinar',
+  target_datetime DATETIME NOT NULL,
+  webinar_link VARCHAR(1000) NOT NULL,
+  is_active TINYINT(1) DEFAULT 1,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);

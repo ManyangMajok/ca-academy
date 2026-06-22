@@ -1,13 +1,29 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <!-- background -->
-  <rect width="64" height="64" fill="#080808"/>
-  <!-- gold border -->
-  <rect x="2" y="2" width="60" height="60" fill="none" stroke="#C9A84C" stroke-width="1.5"/>
-  <!-- graduation cap -->
-  <polygon points="32,9 22,15 32,21 42,15" fill="#C9A84C"/>
-  <line x1="42" y1="15" x2="42" y2="24" stroke="#C9A84C" stroke-width="2.5" stroke-linecap="round"/>
-  <!-- C in purple -->
-  <text x="8" y="52" font-family="Georgia, serif" font-size="34" font-weight="bold" fill="#6B3FA0">C</text>
-  <!-- A in gold -->
-  <text x="32" y="52" font-family="Georgia, serif" font-size="34" font-weight="bold" fill="#C9A84C">A</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="500" height="500">
+  <!-- Background -->
+  <rect width="500" height="500" fill="#060913"/>
+  
+  <!-- Outer Border (broken) -->
+  <path d="M 60 130 L 60 330 L 80 330" stroke="#C9A84C" stroke-width="4" fill="none"/>
+  <path d="M 60 130 L 200 130" stroke="#C9A84C" stroke-width="4" fill="none"/>
+  
+  <path d="M 440 130 L 440 330 L 420 330" stroke="#C9A84C" stroke-width="4" fill="none"/>
+  <path d="M 440 130 L 300 130" stroke="#C9A84C" stroke-width="4" fill="none"/>
+
+  <!-- Graduation Cap -->
+  <path d="M 250 100 L 290 120 L 250 140 L 210 120 Z" stroke="#C9A84C" stroke-width="5" fill="none"/>
+  <path d="M 225 130 L 225 150 L 250 165 L 275 150 L 275 130" stroke="#C9A84C" stroke-width="4" fill="none"/>
+  <!-- Tassel -->
+  <line x1="285" y1="123" x2="285" y2="155" stroke="#C9A84C" stroke-width="3"/>
+  <circle cx="285" cy="160" r="4" fill="#C9A84C"/>
+
+  <!-- TTE Text -->
+  <text x="80" y="300" font-family="'Times New Roman', Times, serif" font-size="180" font-weight="bold" fill="#F4F4F4">T</text>
+  <text x="200" y="300" font-family="'Times New Roman', Times, serif" font-size="180" font-weight="bold" fill="#F4F4F4">T</text>
+  <text x="320" y="300" font-family="'Times New Roman', Times, serif" font-size="180" font-weight="bold" fill="#C9A84C">E</text>
+
+  <!-- Bottom Line -->
+  <line x1="200" y1="322" x2="300" y2="322" stroke="#C9A84C" stroke-width="4"/>
+
+  <!-- ACADEMY Text -->
+  <text x="250" y="365" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="bold" fill="#C9A84C" text-anchor="middle" letter-spacing="14">A C A D E M Y</text>
 </svg>

@@ -3,248 +3,289 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>CA Academy — Admin Panel</title>
+  <title>TTE Academy — Admin</title>
   <link rel="stylesheet" href="css/admin.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
-<div class="sidebar">
-  <div class="sidebar-header">
-    <h2>CA Academy</h2>
-    <span class="badge-admin">Admin</span>
-  </div>
-  <nav>
-    <a href="#dashboard" class="nav-item active" data-section="dashboard">
-      <i class="fas fa-chart-line"></i> Dashboard
-    </a>
-    <a href="#leads" class="nav-item" data-section="leads">
-      <i class="fas fa-users"></i> Webinar Leads
-    </a>
-    <a href="#guides" class="nav-item" data-section="guides">
-      <i class="fas fa-file-alt"></i> Guide Requests
-    </a>
-    <a href="#mailing" class="nav-item" data-section="mailing">
-      <i class="fas fa-envelope"></i> Mailing List
-    </a>
-    <a href="#broadcast" class="nav-item" data-section="broadcast">
-      <i class="fas fa-bullhorn"></i> Send Broadcast
-    </a>
-  </nav>
-  <div class="sidebar-footer">
-    <button id="logoutBtn" class="btn-logout">Logout</button>
+<!-- ── LOGIN ──────────────────────────────────── -->
+<div id="loginWrap">
+  <div class="login-card">
+    <div class="login-logo">
+      <div class="login-badge">Admin Portal</div>
+      <h1>TTE Academy</h1>
+      <p>Sign in to manage your leads and webinars</p>
+    </div>
+    <div id="loginErr"></div>
+    <div class="fld">
+      <label>Email</label>
+      <input type="email" id="loginEmail" placeholder="admin@tteacademy.com" autocomplete="email">
+    </div>
+    <div class="fld">
+      <label>Password</label>
+      <input type="password" id="loginPass" placeholder="••••••••" autocomplete="current-password">
+    </div>
+    <button class="btn btn-p btn-full" onclick="doLogin()" style="margin-top:8px">Sign In</button>
   </div>
 </div>
 
-<div class="main">
-  <!-- LOGIN SECTION -->
-  <div id="loginSection" class="section-full">
-    <div class="login-box">
-      <h1>CA Academy Admin</h1>
-      <p>Enter your admin API key to continue</p>
-      <input type="password" id="apiKeyInput" placeholder="Paste admin API key..." autocomplete="off">
-      <button onclick="adminLogin()" class="btn-primary">Login</button>
-      <div id="loginError" class="error" style="display:none;margin-top:16px"></div>
+<!-- ── SHELL (shown after login) ──────────────── -->
+<div id="shell">
+  <!-- Dim overlay behind open drawer -->
+  <div id="overlay"></div>
+
+  <!-- Sidebar / Drawer -->
+  <div id="sb">
+    <div class="sb-brand">
+      <div>
+        <h2>TTE Academy</h2>
+        <span class="badge">Admin</span>
+      </div>
+      <div class="sb-brand-right">
+        <button id="sbClose" title="Close menu"><i class="fas fa-times"></i></button>
+      </div>
+    </div>
+    <nav class="sb-nav">
+      <button class="nav-btn on" data-pg="dashboard"><i class="fas fa-chart-line"></i> Dashboard</button>
+      <button class="nav-btn" data-pg="leads"><i class="fas fa-users"></i> Webinar Leads</button>
+      <button class="nav-btn" data-pg="guides"><i class="fas fa-file-alt"></i> Guide Requests</button>
+      <button class="nav-btn" data-pg="mailing"><i class="fas fa-envelope"></i> Mailing List</button>
+      <button class="nav-btn" data-pg="countdown"><i class="fas fa-clock"></i> Countdown</button>
+      <button class="nav-btn" data-pg="feedback"><i class="fas fa-link"></i> Feedback Links</button>
+      <button class="nav-btn" data-pg="waitlist"><i class="fas fa-star"></i> Blueprint Waitlist</button>
+      <button class="nav-btn" data-pg="broadcast"><i class="fas fa-bullhorn"></i> Broadcast Email</button>
+    </nav>
+    <div class="sb-foot">
+      <div class="sb-user"><strong>Signed in as</strong><span id="sbEmail"></span></div>
+      <button class="btn-out" onclick="doLogout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
     </div>
   </div>
 
-  <!-- DASHBOARD -->
-  <div id="dashboardSection" class="section" style="display:none">
-    <div class="header">
-      <h1>Dashboard</h1>
-      <p>Real-time overview of all leads and subscribers</p>
+  <!-- Main content -->
+  <div id="main">
+    <!-- Mobile topbar (hidden on desktop) -->
+    <div id="topbar">
+      <button id="menuBtn" title="Open menu"><i class="fas fa-bars"></i></button>
+      <span id="tbTitle">Dashboard</span>
+      <span class="topbar-logo">TTE Academy</span>
     </div>
-    <div class="stats-grid">
-      <div class="stat-card">
-        <div class="stat-icon" style="background:rgba(255,106,26,.15)"><i class="fas fa-calendar-check" style="color:#FF6A1A"></i></div>
-        <div>
-          <div class="stat-label">Webinar Registrations</div>
-          <div class="stat-value" id="countWebinar">0</div>
+
+    <!-- DASHBOARD -->
+    <div id="pg-dashboard" class="pg on">
+      <div class="pg-head">
+        <h1>Dashboard</h1>
+        <p>Live overview of all leads and subscribers</p>
+      </div>
+      <div class="stats">
+        <div class="sc">
+          <div class="sc-ico" style="background:rgba(255,106,26,.14)"><i class="fas fa-calendar-check" style="color:#FF6A1A"></i></div>
+          <div><div class="sc-lbl">Webinar Leads</div><div class="sc-val" id="cnt-leads">—</div></div>
+        </div>
+        <div class="sc">
+          <div class="sc-ico" style="background:rgba(242,183,5,.14)"><i class="fas fa-book" style="color:#F2B705"></i></div>
+          <div><div class="sc-lbl">Guide Requests</div><div class="sc-val" id="cnt-guides">—</div></div>
+        </div>
+        <div class="sc">
+          <div class="sc-ico" style="background:rgba(156,160,166,.14)"><i class="fas fa-envelope" style="color:#9AA0A6"></i></div>
+          <div><div class="sc-lbl">Mailing List</div><div class="sc-val" id="cnt-mailing">—</div></div>
+        </div>
+        <div class="sc">
+          <div class="sc-ico" style="background:rgba(201,168,76,.14)"><i class="fas fa-link" style="color:#C9A84C"></i></div>
+          <div><div class="sc-lbl">Feedback Links</div><div class="sc-val" id="cnt-feedback">—</div></div>
+        </div>
+        <div class="sc">
+          <div class="sc-ico" style="background:rgba(107,63,160,.14)"><i class="fas fa-star" style="color:#9B6FD4"></i></div>
+          <div><div class="sc-lbl">Blueprint Waitlist</div><div class="sc-val" id="cnt-waitlist">—</div></div>
         </div>
       </div>
-      <div class="stat-card">
-        <div class="stat-icon" style="background:rgba(242,183,5,.15)"><i class="fas fa-book" style="color:#F2B705"></i></div>
-        <div>
-          <div class="stat-label">Guide Requests</div>
-          <div class="stat-value" id="countGuide">0</div>
+      <div class="card">
+        <h2>Recent Activity</h2>
+        <div id="recentFeed"><div style="color:var(--muted);font-size:13px">Loading...</div></div>
+      </div>
+    </div>
+
+    <!-- WEBINAR LEADS -->
+    <div id="pg-leads" class="pg">
+      <div class="pg-head">
+        <h1>Webinar Leads</h1>
+        <p id="sub-leads">—</p>
+      </div>
+      <div class="card">
+        <div class="tb">
+          <input type="text" class="s-input" id="q-leads" placeholder="Search name or email…">
+          <button class="btn btn-s" onclick="exportCSV(_leads,['fname','lname','email','stage','slot','mailing_list','created_at'],'webinar-leads')"><i class="fas fa-download"></i> CSV</button>
+        </div>
+        <div class="tw">
+          <table class="dt">
+            <thead><tr><th>Name</th><th>Email</th><th>Stage</th><th>Slot</th><th>Newsletter</th><th>Date</th></tr></thead>
+            <tbody id="tb-leads"><tr><td colspan="6" class="empty">Loading…</td></tr></tbody>
+          </table>
         </div>
       </div>
-      <div class="stat-card">
-        <div class="stat-icon" style="background:rgba(156,160,166,.15)"><i class="fas fa-envelope" style="color:#9AA0A6"></i></div>
-        <div>
-          <div class="stat-label">Mailing List</div>
-          <div class="stat-value" id="countMailing">0</div>
+    </div>
+
+    <!-- GUIDE REQUESTS -->
+    <div id="pg-guides" class="pg">
+      <div class="pg-head">
+        <h1>Guide Requests</h1>
+        <p id="sub-guides">—</p>
+      </div>
+      <div class="card">
+        <div class="tb">
+          <input type="text" class="s-input" id="q-guides" placeholder="Search name or email…">
+          <button class="btn btn-s" onclick="exportCSV(_guides,['gname','gemail','gcity','grev','gnote','created_at'],'guide-requests')"><i class="fas fa-download"></i> CSV</button>
+        </div>
+        <div class="tw">
+          <table class="dt">
+            <thead><tr><th>Name</th><th>Email</th><th>City</th><th>Revenue</th><th>Notes</th><th>Date</th></tr></thead>
+            <tbody id="tb-guides"><tr><td colspan="6" class="empty">Loading…</td></tr></tbody>
+          </table>
         </div>
       </div>
-      <div class="stat-card">
-        <div class="stat-icon" style="background:rgba(201,192,172,.15)"><i class="fas fa-link" style="color:#C9C0AC"></i></div>
-        <div>
-          <div class="stat-label">Feedback Links</div>
-          <div class="stat-value" id="countFeedback">0</div>
+    </div>
+
+    <!-- MAILING LIST -->
+    <div id="pg-mailing" class="pg">
+      <div class="pg-head">
+        <h1>Mailing List</h1>
+        <p id="sub-mailing">—</p>
+      </div>
+      <div class="card">
+        <div class="tb">
+          <input type="text" class="s-input" id="q-mailing" placeholder="Search email…">
+          <button class="btn btn-s" onclick="exportCSV(_mailing,['jemail','created_at'],'mailing-list')"><i class="fas fa-download"></i> CSV</button>
+        </div>
+        <div class="tw">
+          <table class="dt">
+            <thead><tr><th>Email</th><th>Subscribed</th><th>Action</th></tr></thead>
+            <tbody id="tb-mailing"><tr><td colspan="3" class="empty">Loading…</td></tr></tbody>
+          </table>
         </div>
       </div>
     </div>
 
-    <div class="section-box">
-      <h2>Recent Activity</h2>
-      <div id="recentActivity" style="color:#8C8472;font-size:14px">Loading...</div>
-    </div>
-  </div>
-
-  <!-- WEBINAR LEADS -->
-  <div id="leadsSection" class="section" style="display:none">
-    <div class="header">
-      <h1>Webinar Leads</h1>
-      <p id="leadsCount">Loading...</p>
-    </div>
-    <div class="section-box">
-      <div class="toolbar">
-        <input type="text" id="leadsSearch" placeholder="Search by name or email..." class="search-input">
-        <button onclick="exportLeads()" class="btn-secondary">
-          <i class="fas fa-download"></i> Export CSV
-        </button>
+    <!-- COUNTDOWN -->
+    <div id="pg-countdown" class="pg">
+      <div class="pg-head">
+        <h1>Countdown Timer</h1>
+        <p>Launch a live countdown on the public website</p>
       </div>
-      <table id="leadsTable" class="data-table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Stage</th>
-            <th>Slot</th>
-            <th>Mailing List</th>
-            <th>Registered</th>
-          </tr>
-        </thead>
-        <tbody id="leadsTbody">
-          <tr><td colspan="6">Loading...</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <!-- GUIDE REQUESTS -->
-  <div id="guidesSection" class="section" style="display:none">
-    <div class="header">
-      <h1>Guide Requests</h1>
-      <p id="guidesCount">Loading...</p>
-    </div>
-    <div class="section-box">
-      <div class="toolbar">
-        <input type="text" id="guidesSearch" placeholder="Search by name or email..." class="search-input">
-        <button onclick="exportGuides()" class="btn-secondary">
-          <i class="fas fa-download"></i> Export CSV
-        </button>
+      <div class="card">
+        <h2>Current Status</h2>
+        <div id="cd-status"><div style="color:var(--muted);font-size:13px">Loading…</div></div>
       </div>
-      <table id="guidesTable" class="data-table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>City</th>
-            <th>Revenue</th>
-            <th>Challenge</th>
-            <th>Requested</th>
-          </tr>
-        </thead>
-        <tbody id="guidesTbody">
-          <tr><td colspan="6">Loading...</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <!-- MAILING LIST -->
-  <div id="mailingSection" class="section" style="display:none">
-    <div class="header">
-      <h1>Mailing List</h1>
-      <p id="mailingCount">Loading...</p>
-    </div>
-    <div class="section-box">
-      <div class="toolbar">
-        <input type="text" id="mailingSearch" placeholder="Search by email..." class="search-input">
-        <button onclick="exportMailing()" class="btn-secondary">
-          <i class="fas fa-download"></i> Export CSV
-        </button>
-      </div>
-      <table id="mailingTable" class="data-table">
-        <thead>
-          <tr>
-            <th>Email</th>
-            <th>Subscribed</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody id="mailingTbody">
-          <tr><td colspan="3">Loading...</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <!-- BROADCAST EMAIL -->
-  <div id="broadcastSection" class="section" style="display:none">
-    <div class="header">
-      <h1>Send Broadcast Email</h1>
-      <p>Send promotional messages to your audience</p>
-    </div>
-    <div class="section-box">
-      <form id="broadcastForm" onsubmit="sendBroadcast(event)">
-        
-        <div class="form-group">
-          <label>Select Audience</label>
-          <div class="checkbox-group">
-            <label class="check"><input type="checkbox" name="audience" value="webinar"> Webinar Registrations</label>
-            <label class="check"><input type="checkbox" name="audience" value="mailing"> Mailing List</label>
-            <label class="check"><input type="checkbox" name="audience" value="guides"> Guide Requesters</label>
+      <div class="card">
+        <h2>Set Countdown</h2>
+        <form onsubmit="saveCountdown(event)">
+          <div class="fg">
+            <label>Banner Title</label>
+            <input type="text" class="fi" id="cd-title" placeholder="Free Webinar — Live Tonight" value="Free Webinar">
           </div>
-          <div id="audienceError" class="form-error" style="display:none;color:#FF6A1A;font-size:13px;margin-top:8px"></div>
-        </div>
-
-        <div class="form-group">
-          <label>Email Subject *</label>
-          <input type="text" name="subject" required placeholder="e.g., New Free Webinar: Profit Margins in Food Trucks" class="form-input">
-        </div>
-
-        <div class="form-group">
-          <label>Email Body (HTML or Plain Text) *</label>
-          <textarea name="body" required placeholder="Your message here..." class="form-textarea"></textarea>
-          <div class="form-hint">
-            <i class="fas fa-info-circle"></i>
-            <span>HTML tags are supported. Emails will include your branding.</span>
+          <div class="fg">
+            <label>Webinar Date & Time *</label>
+            <input type="datetime-local" class="fi" id="cd-dt" required>
+            <div class="fhint"><i class="fas fa-info-circle"></i> Your local time — banner appears on website immediately</div>
           </div>
-        </div>
-
-        <div class="form-group">
-          <label>From Email</label>
-          <input type="email" name="fromEmail" disabled placeholder="noreply@caacademy.com" class="form-input" style="background:#1B1813;cursor:not-allowed">
-        </div>
-
-        <div class="preview-box">
-          <h4>Preview</h4>
-          <div class="preview-item">
-            <div class="preview-subject">Subject: <span id="previewSubject">Your subject here...</span></div>
-            <div class="preview-body" id="previewBody">Your message preview will appear here...</div>
+          <div class="fg">
+            <label>Webinar Link *</label>
+            <input type="url" class="fi" id="cd-link" placeholder="https://zoom.us/j/..." required>
           </div>
-        </div>
-
-        <div id="broadcastStats" style="display:none;background:rgba(242,183,5,.1);border:1px solid rgba(242,183,5,.4);color:#F2B705;padding:16px;border-radius:3px;margin-bottom:20px;font-size:14px">
-          <strong>Recipients:</strong> <span id="recipientCount">0</span> emails will be sent
-        </div>
-
-        <div class="form-actions">
-          <button type="button" onclick="calculateRecipients()" class="btn-secondary">Calculate Recipients</button>
-          <button type="submit" class="btn-primary" id="sendBtn" disabled>Send to <span id="sendBtnCount">0</span> Recipients</button>
-        </div>
-
-        <div id="broadcastError" class="form-error" style="display:none;margin-top:16px"></div>
-        <div id="broadcastSuccess" class="form-success" style="display:none;margin-top:16px"></div>
-      </form>
+          <div class="fa-row">
+            <button type="submit" class="btn btn-p" id="cd-save"><i class="fas fa-rocket"></i> Launch Countdown</button>
+            <button type="button" class="btn btn-d" id="cd-clear" onclick="clearCountdown()" style="display:none"><i class="fas fa-times-circle"></i> Clear Countdown</button>
+          </div>
+          <div class="alert alert-e" id="cd-err"></div>
+          <div class="alert alert-s" id="cd-ok"></div>
+        </form>
+      </div>
     </div>
-  </div>
 
-</div>
+    <!-- FEEDBACK LINKS -->
+    <div id="pg-feedback" class="pg">
+      <div class="pg-head">
+        <h1>Feedback Links</h1>
+        <p id="sub-feedback">—</p>
+      </div>
+      <div class="card">
+        <div class="tb">
+          <input type="text" class="s-input" id="q-feedback" placeholder="Search name or email…">
+          <button class="btn btn-s" onclick="exportCSV(_feedback,['fname','femail','fwhat','paid','used','created_at'],'feedback-links')"><i class="fas fa-download"></i> CSV</button>
+        </div>
+        <div class="tw">
+          <table class="dt">
+            <thead><tr><th>Name</th><th>Email</th><th>Interest</th><th>Wants 1:1</th><th>Status</th><th>Date</th></tr></thead>
+            <tbody id="tb-feedback"><tr><td colspan="6" class="empty">Loading…</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- BLUEPRINT WAITLIST -->
+    <div id="pg-waitlist" class="pg">
+      <div class="pg-head">
+        <h1>Blueprint Waitlist</h1>
+        <p id="sub-waitlist">—</p>
+      </div>
+      <div class="card">
+        <div class="tb">
+          <input type="text" class="s-input" id="q-waitlist" placeholder="Search name or email…">
+          <button class="btn btn-s" onclick="exportCSV(_waitlist,['wname','wemail','wstage','created_at'],'blueprint-waitlist')"><i class="fas fa-download"></i> CSV</button>
+        </div>
+        <div class="tw">
+          <table class="dt">
+            <thead><tr><th>Name</th><th>Email</th><th>Stage</th><th>Date</th></tr></thead>
+            <tbody id="tb-waitlist"><tr><td colspan="4" class="empty">Loading…</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- BROADCAST -->
+    <div id="pg-broadcast" class="pg">
+      <div class="pg-head">
+        <h1>Broadcast Email</h1>
+        <p>Send an email to your entire audience or a segment</p>
+      </div>
+      <div class="card">
+        <form onsubmit="sendBroadcast(event)">
+          <div class="fg">
+            <label>Audience</label>
+            <div class="cg">
+              <label class="ck"><input type="checkbox" name="aud" value="webinar"> <span>Webinar Registrations (<span id="aud-leads">0</span>)</span></label>
+              <label class="ck"><input type="checkbox" name="aud" value="mailing"> <span>Mailing List (<span id="aud-mailing">0</span>)</span></label>
+              <label class="ck"><input type="checkbox" name="aud" value="guides"> <span>Guide Requesters (<span id="aud-guides">0</span>)</span></label>
+              <label class="ck"><input type="checkbox" name="aud" value="waitlist"> <span>Blueprint Waitlist (<span id="aud-waitlist">0</span>)</span></label>
+            </div>
+          </div>
+          <div class="fg">
+            <label>Subject *</label>
+            <input type="text" class="fi" id="bc-subj" required placeholder="e.g. New Webinar This Thursday — Don't Miss It">
+          </div>
+          <div class="fg">
+            <label>Message (HTML or plain text) *</label>
+            <textarea class="fta" id="bc-body" required placeholder="Write your message here…"></textarea>
+            <div class="fhint"><i class="fas fa-info-circle"></i> HTML supported. Your branding is added automatically.</div>
+          </div>
+          <div class="prev-box">
+            <h4>Preview</h4>
+            <div class="prev-sub">Subject: <span id="prev-subj">—</span></div>
+            <div class="prev-body" id="prev-body">Your message will appear here…</div>
+          </div>
+          <div class="recip-badge" id="recip-badge">Sending to <strong id="recip-n">0</strong> recipients</div>
+          <div class="fa-row">
+            <button type="button" class="btn btn-s" onclick="calcRecip()"><i class="fas fa-calculator"></i> Count Recipients</button>
+            <button type="submit" class="btn btn-p" id="bc-send" disabled>Send to <span id="bc-n">0</span> Recipients</button>
+          </div>
+          <div class="alert alert-e" id="bc-err"></div>
+          <div class="alert alert-s" id="bc-ok"></div>
+        </form>
+      </div>
+    </div>
+
+  </div><!-- /main -->
+</div><!-- /shell -->
 
 <script src="js/admin.js"></script>
-
 </body>
 </html>

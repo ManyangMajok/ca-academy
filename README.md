@@ -1,4 +1,4 @@
-# CA Academy — Full-Stack Landing Site
+# TTE Academy — Full-Stack Landing Site
 
 A complete production-ready landing site with Node.js backend, SQLite database, email integration (Resend), lead capture, and deployment configs for Vercel/Netlify.
 
@@ -49,7 +49,7 @@ cp .env.example .env
 Edit `.env`:
 ```
 RESEND_API_KEY=your_api_key_from_resend.com
-FROM_EMAIL=noreply@caacademy.com
+FROM_EMAIL=noreply@tteacademy.com
 PORT=3000
 FRONTEND_URL=http://localhost:3000
 ```
